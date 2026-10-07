@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Edwin Msilimba | Computer Science Student &amp; Developer</title>
+  <meta name="description" content="Personal portfolio of Edwin Msilimba, a BSc Computer Science student at DMI University focused on software development, web development, machine learning and mobile development.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Edwin Msilimba | Computer Science Student &amp; Developer">
+  <meta property="og:description" content="Personal portfolio of Edwin Msilimba, a BSc Computer Science student at DMI University focused on software development, web development, machine learning and mobile development.">
+  <meta property="og:site_name" content="Edwin Msilimba">
+  <meta name="twitter:card" content="summary">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <!-- Tailwind CSS via CDN, intentionally used with no custom configuration (works on GitHub Pages) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="assets/js/main.js" defer></script>
+</head>
+<body class="bg-white text-[#050b1a] antialiased">
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <header class="sticky top-0 z-50 border-b border-[#dde1e8] bg-white">
+    <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
+      <a href="index.html" class="font-display text-base font-semibold text-[#050b1a]">Edwin Msilimba</a>
+      <nav aria-label="Primary" class="hidden items-center gap-7 lg:flex">
+        <a href="index.html" class="flex h-16 items-center border-b-2 px-1 text-sm border-[#050b1a] font-semibold text-[#050b1a]" aria-current="page">Home</a><a href="index.html#about" class="flex h-16 items-center border-b-2 px-1 text-sm border-transparent text-[#475063] hover:text-[#050b1a]">About</a><a href="projects.html" class="flex h-16 items-center border-b-2 px-1 text-sm border-transparent text-[#475063] hover:text-[#050b1a]">Projects</a><a href="project.html" class="flex h-16 items-center border-b-2 px-1 text-sm border-transparent text-[#475063] hover:text-[#050b1a]">Featured Project</a><a href="#" data-link="GITHUB_PROFILE_URL" class="flex h-16 items-center gap-2 border-b-2 border-transparent px-1 text-sm text-[#475063] hover:text-[#050b1a]"><i class="fa-brands fa-github" aria-hidden="true"></i>GitHub</a><a href="index.html#contact" class="flex h-16 items-center border-b-2 border-transparent px-1 text-sm text-[#475063] hover:text-[#050b1a]">Contact</a>
+      </nav>
+      <button id="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-menu"
+        class="flex h-10 w-10 items-center justify-center rounded border border-[#dde1e8] text-[#050b1a] lg:hidden">
+        <i class="fa-solid fa-bars" aria-hidden="true"></i>
+        <span class="sr-only">Toggle navigation menu</span>
+      </button>
+    </div>
+    <nav id="mobile-menu" aria-label="Mobile" class="hidden border-t border-[#dde1e8] bg-white lg:hidden">
+      <a href="index.html" class="block border-l-4 px-4 py-3 text-sm border-[#050b1a] bg-[#f4f5f7] font-semibold" aria-current="page">Home</a><a href="index.html#about" class="block border-l-4 px-4 py-3 text-sm border-transparent text-[#475063]">About</a><a href="projects.html" class="block border-l-4 px-4 py-3 text-sm border-transparent text-[#475063]">Projects</a><a href="project.html" class="block border-l-4 px-4 py-3 text-sm border-transparent text-[#475063]">Featured Project</a><a href="#" data-link="GITHUB_PROFILE_URL" class="block border-l-4 border-transparent px-4 py-3 text-sm text-[#475063]"><i class="fa-brands fa-github mr-2" aria-hidden="true"></i>GitHub</a><a href="index.html#contact" class="block border-l-4 border-transparent px-4 py-3 text-sm text-[#475063]">Contact</a>
+    </nav>
+  </header>
+
+  <noscript>
+    <p class="bg-[#fff8e8] px-5 py-3 text-sm">Some links are filled in by JavaScript. Please enable it, or open projects.html and project.html directly.</p>
+  </noscript>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="mx-auto grid max-w-6xl items-center gap-12 px-5 py-14 sm:px-8 md:py-20 lg:grid-cols-[1.1fr_1fr]" aria-labelledby="hero-title">
+      <div>
+        <h1 id="hero-title" class="font-display text-4xl font-bold leading-tight sm:text-5xl lg:text-6xl">Edwin Msilimba</h1>
+        <p class="font-display mt-3 text-xl font-semibold text-[#2b3447] sm:text-2xl">Computer Science Student &amp; Software Developer</p>
+        <p class="mt-6 max-w-xl text-lg text-[#475063]">I build practical software solutions using programming, web technologies, data and machine learning.</p>
+        <div class="mt-9 flex flex-wrap gap-3">
+          <a href="projects.html" class="inline-flex items-center gap-2 rounded bg-[#050b1a] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#16213d]">
+            <i class="fa-solid fa-diagram-project" aria-hidden="true"></i>View My Projects
+          </a>
+          <a href="#" data-link="GITHUB_PROFILE_URL" class="inline-flex items-center gap-2 rounded border border-[#050b1a] px-6 py-3 text-sm font-semibold text-[#050b1a] transition hover:bg-[#f4f5f7]">
+            <i class="fa-brands fa-github" aria-hidden="true"></i>GitHub Profile
+          </a>
+        </div>
+      </div>
+
+      <figure class="on-dark overflow-hidden rounded bg-[#050b1a] text-white">
+        <div class="flex items-center gap-2 border-b border-[#1d2742] px-5 py-3 text-xs text-[#b7c0d1]">
+          <i class="fa-solid fa-code" aria-hidden="true"></i><span>developer.py</span>
+        </div>
+        <pre class="code-panel overflow-x-auto p-5 text-[0.8rem] leading-7 sm:p-6 sm:text-sm" role="img" aria-label="A short Python dictionary describing Edwin Msilimba: BSc Computer Science student at DMI University, focused on software, web, machine learning and mobile development."><code><span class="c-k">developer</span> = {
+    <span class="c-s">"name"</span>: <span class="c-v">"Edwin Msilimba"</span>,
+    <span class="c-s">"programme"</span>: <span class="c-v">"BSc Computer Science"</span>,
+    <span class="c-s">"university"</span>: <span class="c-v">"DMI University"</span>,
+    <span class="c-s">"location"</span>: <span class="c-v">"Malawi"</span>,
+    <span class="c-s">"focus"</span>: [
+        <span class="c-v">"Software Development"</span>,
+        <span class="c-v">"Web Development"</span>,
+        <span class="c-v">"Machine Learning"</span>,
+        <span class="c-v">"Mobile Development"</span>,
+    ],
+}</code></pre>
+        <figcaption class="border-t border-[#1d2742] px-5 py-3 text-xs text-[#b7c0d1]">A code-style summary of the profile on this page.</figcaption>
+      </figure>
+    </section>
+
+    <!-- About -->
+    <section id="about" class="border-y border-[#dde1e8] bg-[#f4f5f7]" aria-labelledby="about-title">
+      <div class="mx-auto grid max-w-6xl gap-10 px-5 py-16 sm:px-8 lg:grid-cols-[1.3fr_1fr]">
+        <div>
+          <h2 id="about-title" class="font-display text-3xl font-bold">About Me</h2>
+          <div class="mt-6 max-w-2xl space-y-4 text-[#2b3447]">
+            <p>I am Edwin Msilimba, a Computer Science student and software developer at DMI University in Malawi. I am studying for a Bachelor of Science in Computer Science and expect to complete the degree in 2026.</p>
+            <p>My interests include web and mobile application development, machine learning, software engineering and emerging technologies. I enjoy turning real-world problems into practical software systems, and I keep improving my technical skills through both academic and personal projects.</p>
+            <p>My approach is to understand the problem first, design a solution, build it, test it and document it, so that the work can be reviewed and reused by others.</p>
+          </div>
+        </div>
+        <dl class="self-start border-t border-[#c5cad4] bg-white text-sm">
+          <div class="grid grid-cols-[8rem_1fr] gap-3 border-b border-[#dde1e8] px-5 py-3"><dt class="text-[#475063]">Name</dt><dd class="font-medium">Edwin Msilimba</dd></div>
+          <div class="grid grid-cols-[8rem_1fr] gap-3 border-b border-[#dde1e8] px-5 py-3"><dt class="text-[#475063]">Programme</dt><dd class="font-medium">BSc Computer Science</dd></div>
+          <div class="grid grid-cols-[8rem_1fr] gap-3 border-b border-[#dde1e8] px-5 py-3"><dt class="text-[#475063]">Institution</dt><dd class="font-medium">DMI University</dd></div>
+          <div class="grid grid-cols-[8rem_1fr] gap-3 border-b border-[#dde1e8] px-5 py-3"><dt class="text-[#475063]">Expected completion</dt><dd class="font-medium">2026</dd></div>
+          <div class="grid grid-cols-[8rem_1fr] gap-3 border-b border-[#dde1e8] px-5 py-3"><dt class="text-[#475063]">Location</dt><dd class="font-medium">Malawi</dd></div>
+          <div class="grid grid-cols-[8rem_1fr] gap-3 px-5 py-3"><dt class="text-[#475063]">Focus</dt><dd class="font-medium">Software, web, machine learning, mobile and emerging technologies</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- Education -->
+    <section class="mx-auto max-w-6xl px-5 py-16 sm:px-8" aria-labelledby="education-title">
+      <h2 id="education-title" class="font-display text-3xl font-bold">Education</h2>
+      <ol class="mt-8 max-w-3xl border-l-2 border-[#050b1a]">
+        <li class="relative pl-8">
+          <span class="absolute -left-[0.8rem] top-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#050b1a] text-white" aria-hidden="true"><i class="fa-solid fa-graduation-cap text-[0.65rem]"></i></span>
+          <div class="border border-[#dde1e8] p-6">
+            <p class="text-sm font-semibold text-[#475063]">2023 &ndash; 2026</p>
+            <h3 class="font-display mt-1 text-xl font-semibold">Bachelor of Science in Computer Science</h3>
+            <p class="mt-1 text-[#2b3447]">DMI University, Malawi</p>
+            <p class="mt-3 text-sm text-[#475063]">Expected completion: 2026</p>
+          </div>
+        </li>
+      </ol>
+    </section>
+
+    <!-- What I do -->
+    <section class="bg-[#f4f5f7]" aria-labelledby="what-title">
+      <div class="mx-auto max-w-6xl px-5 py-16 sm:px-8">
+        <h2 id="what-title" class="font-display text-3xl font-bold">What I Do</h2>
+        <p class="mt-3 max-w-2xl text-[#475063]">The areas of computing I study and build in.</p>
+        <ul class="mt-8 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
+          <li class="border-t-2 border-[#050b1a] pt-4">
+            <i class="fa-solid fa-laptop-code text-xl" aria-hidden="true"></i>
+            <h3 class="font-display mt-3 text-lg font-semibold">Software Development</h3>
+            <p class="mt-2 text-[#2b3447]">Designing and writing programs in Python, C++ and JavaScript to solve practical problems.</p>
+          </li>
+          <li class="border-t-2 border-[#050b1a] pt-4">
+            <i class="fa-solid fa-globe text-xl" aria-hidden="true"></i>
+            <h3 class="font-display mt-3 text-lg font-semibold">Web Development</h3>
+            <p class="mt-2 text-[#2b3447]">Building responsive websites and web applications with HTML, CSS, Tailwind CSS, JavaScript and Flask.</p>
+          </li>
+          <li class="border-t-2 border-[#050b1a] pt-4">
+            <i class="fa-solid fa-mobile-screen text-xl" aria-hidden="true"></i>
+            <h3 class="font-display mt-3 text-lg font-semibold">Mobile Development</h3>
+            <p class="mt-2 text-[#2b3447]">Learning to build cross-platform mobile applications with Flutter and Dart.</p>
+          </li>
+          <li class="border-t-2 border-[#050b1a] pt-4">
+            <i class="fa-solid fa-brain text-xl" aria-hidden="true"></i>
+            <h3 class="font-display mt-3 text-lg font-semibold">Machine Learning</h3>
+            <p class="mt-2 text-[#2b3447]">Applying Python, Pandas, NumPy and Scikit-learn to analyse data and find patterns.</p>
+          </li>
+          <li class="border-t-2 border-[#050b1a] pt-4">
+            <i class="fa-solid fa-database text-xl" aria-hidden="true"></i>
+            <h3 class="font-display mt-3 text-lg font-semibold">Database Systems</h3>
+            <p class="mt-2 text-[#2b3447]">Organising, storing and retrieving application data in a reliable and structured way.</p>
+          </li>
+          <li class="border-t-2 border-[#050b1a] pt-4">
+            <i class="fa-solid fa-microchip text-xl" aria-hidden="true"></i>
+            <h3 class="font-display mt-3 text-lg font-semibold">Emerging Technologies</h3>
+            <p class="mt-2 text-[#2b3447]">Exploring newer technologies and how they can be applied to real problems.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section class="mx-auto max-w-6xl px-5 py-16 sm:px-8" aria-labelledby="skills-title">
+      <h2 id="skills-title" class="font-display text-3xl font-bold">Technical Skills</h2>
+      <p class="mt-3 max-w-2xl text-[#475063]">The languages, frameworks and tools I work with, grouped by area.</p>
+      <div class="mt-8 grid gap-10 md:grid-cols-2 lg:grid-cols-3">
+        <div>
+          <h3 class="font-display text-lg font-semibold">Programming</h3>
+          <ul class="mt-4 grid grid-cols-2 gap-3 text-sm">
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-brands fa-python w-5 text-center" aria-hidden="true"></i>Python</li><li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-code w-5 text-center" aria-hidden="true"></i>C++</li><li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-brands fa-js w-5 text-center" aria-hidden="true"></i>JavaScript</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-display text-lg font-semibold">Web Development</h3>
+          <ul class="mt-4 grid grid-cols-2 gap-3 text-sm">
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-brands fa-html5 w-5 text-center" aria-hidden="true"></i>HTML</li><li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-brands fa-css3-alt w-5 text-center" aria-hidden="true"></i>CSS</li><li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-palette w-5 text-center" aria-hidden="true"></i>Tailwind CSS</li><li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-flask w-5 text-center" aria-hidden="true"></i>Flask</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-display text-lg font-semibold">Data &amp; Machine Learning</h3>
+          <ul class="mt-4 grid grid-cols-2 gap-3 text-sm">
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-brands fa-python w-5 text-center" aria-hidden="true"></i>Python</li><li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-table w-5 text-center" aria-hidden="true"></i>Pandas</li><li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-calculator w-5 text-center" aria-hidden="true"></i>NumPy</li><li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-circle-nodes w-5 text-center" aria-hidden="true"></i>Scikit-learn</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-display text-lg font-semibold">Development Tools</h3>
+          <ul class="mt-4 grid grid-cols-2 gap-3 text-sm">
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-brands fa-git-alt w-5 text-center" aria-hidden="true"></i>Git</li><li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-brands fa-github w-5 text-center" aria-hidden="true"></i>GitHub</li><li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-laptop-code w-5 text-center" aria-hidden="true"></i>VS Code</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-display text-lg font-semibold">Mobile</h3>
+          <ul class="mt-4 grid grid-cols-2 gap-3 text-sm">
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-mobile-screen w-5 text-center" aria-hidden="true"></i>Flutter</li><li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-bullseye w-5 text-center" aria-hidden="true"></i>Dart</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Developer approach -->
+    <section class="bg-[#f4f5f7]" aria-labelledby="approach-title">
+      <div class="mx-auto max-w-6xl px-5 py-16 sm:px-8">
+        <h2 id="approach-title" class="font-display text-3xl font-bold">Developer Approach</h2>
+        <p class="mt-3 max-w-2xl text-[#475063]">The six steps I follow on a project, from first idea to a working release.</p>
+        <ol class="mt-8 grid gap-x-8 md:grid-cols-2 lg:grid-cols-3">
+          <li class="border-t border-[#c5cad4] py-5 md:pr-6">
+            <span class="font-display text-sm font-bold text-[#475063]" aria-hidden="true">01</span>
+            <h3 class="mt-1 font-semibold">Understand the Problem</h3>
+            <p class="mt-1 text-sm text-[#2b3447]">Find out who the software is for and what it must do before writing any code.</p>
+          </li>
+          <li class="border-t border-[#c5cad4] py-5 md:pr-6">
+            <span class="font-display text-sm font-bold text-[#475063]" aria-hidden="true">02</span>
+            <h3 class="mt-1 font-semibold">Design the Solution</h3>
+            <p class="mt-1 text-sm text-[#2b3447]">Plan the data, the structure and the interface so the build has a clear direction.</p>
+          </li>
+          <li class="border-t border-[#c5cad4] py-5 md:pr-6">
+            <span class="font-display text-sm font-bold text-[#475063]" aria-hidden="true">03</span>
+            <h3 class="mt-1 font-semibold">Build</h3>
+            <p class="mt-1 text-sm text-[#2b3447]">Implement the design in small, readable pieces that can be checked as they grow.</p>
+          </li>
+          <li class="border-t border-[#c5cad4] py-5 md:pr-6">
+            <span class="font-display text-sm font-bold text-[#475063]" aria-hidden="true">04</span>
+            <h3 class="mt-1 font-semibold">Test</h3>
+            <p class="mt-1 text-sm text-[#2b3447]">Run the software with realistic input and fix what breaks before anyone else sees it.</p>
+          </li>
+          <li class="border-t border-[#c5cad4] py-5 md:pr-6">
+            <span class="font-display text-sm font-bold text-[#475063]" aria-hidden="true">05</span>
+            <h3 class="mt-1 font-semibold">Document</h3>
+            <p class="mt-1 text-sm text-[#2b3447]">Write down how it works and how to run it, so others can review and reuse it.</p>
+          </li>
+          <li class="border-t border-[#c5cad4] py-5 md:pr-6">
+            <span class="font-display text-sm font-bold text-[#475063]" aria-hidden="true">06</span>
+            <h3 class="mt-1 font-semibold">Deploy</h3>
+            <p class="mt-1 text-sm text-[#2b3447]">Publish the finished work so that it can be opened and used.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- Featured project teaser -->
+    <section class="on-dark bg-[#050b1a] text-white" aria-labelledby="featured-title">
+      <div class="mx-auto flex max-w-6xl flex-col gap-6 px-5 py-14 sm:px-8 md:flex-row md:items-center md:justify-between">
+        <div>
+          <p class="text-sm text-[#b7c0d1]">Featured academic project</p>
+          <h2 id="featured-title" class="font-display mt-1 text-2xl font-bold">Banking Customer Behaviour Clustering for Fraud Investigation</h2>
+          <p class="mt-2 max-w-2xl text-[#b7c0d1]">An unsupervised machine learning project that groups banking customers by transaction behaviour. The source code, dataset, report and results are collected on the project page.</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a href="project.html" class="rounded bg-white px-6 py-3 text-sm font-semibold text-[#050b1a] transition hover:bg-[#e6e9f0]">View Project</a>
+          <a href="projects.html" class="rounded border border-white px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#16213d]">All Projects</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="mx-auto max-w-6xl px-5 py-16 sm:px-8" aria-labelledby="contact-title">
+      <h2 id="contact-title" class="font-display text-3xl font-bold">Contact</h2>
+      <p class="mt-3 max-w-2xl text-[#475063]">To discuss my work or to ask about a project, reach me through any of the channels below.</p>
+      <ul class="mt-8 grid gap-5 md:grid-cols-3">
+        <li class="flex gap-4 border border-[#dde1e8] p-5 transition hover:border-[#050b1a]">
+          <i class="fa-solid fa-envelope mt-1 w-6 text-center text-xl" aria-hidden="true"></i>
+          <div><h3 class="font-display text-lg font-semibold">Email</h3><p class="mt-1 text-sm text-[#2b3447]">Send me a message directly.</p><a href="#" data-link="EMAIL_ADDRESS" class="mt-3 inline-block text-sm font-semibold underline underline-offset-4">Email Edwin</a></div>
+        </li>
+        <li class="flex gap-4 border border-[#dde1e8] p-5 transition hover:border-[#050b1a]">
+          <i class="fa-brands fa-linkedin mt-1 w-6 text-center text-xl" aria-hidden="true"></i>
+          <div><h3 class="font-display text-lg font-semibold">LinkedIn</h3><p class="mt-1 text-sm text-[#2b3447]">Connect on LinkedIn.</p><a href="#" data-link="LINKEDIN_URL" class="mt-3 inline-block text-sm font-semibold underline underline-offset-4">Open LinkedIn profile</a></div>
+        </li>
+        <li class="flex gap-4 border border-[#dde1e8] p-5 transition hover:border-[#050b1a]">
+          <i class="fa-brands fa-github mt-1 w-6 text-center text-xl" aria-hidden="true"></i>
+          <div><h3 class="font-display text-lg font-semibold">GitHub</h3><p class="mt-1 text-sm text-[#2b3447]">Browse my code and repositories.</p><a href="#" data-link="GITHUB_PROFILE_URL" class="mt-3 inline-block text-sm font-semibold underline underline-offset-4">Open GitHub profile</a></div>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="on-dark bg-[#050b1a] text-white">
+    <div class="mx-auto max-w-6xl px-5 py-12 sm:px-8">
+      <div class="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
+        <div>
+          <p class="font-display text-lg font-semibold">Edwin Msilimba</p>
+          <p class="mt-3 text-sm text-[#b7c0d1]">BSc Computer Science<br>DMI University</p>
+        </div>
+        <ul class="space-y-3 text-sm" aria-label="Footer pages">
+          <li><a href="index.html" class="underline-offset-4 hover:underline">Home</a></li>
+          <li><a href="projects.html" class="underline-offset-4 hover:underline">Projects</a></li>
+          <li><a href="project.html" class="underline-offset-4 hover:underline">Featured Project</a></li>
+        </ul>
+        <ul class="space-y-3 text-sm" aria-label="Contact links">
+          <li><a href="#" data-link="GITHUB_PROFILE_URL" class="underline-offset-4 hover:underline"><i class="fa-brands fa-github mr-2" aria-hidden="true"></i>GitHub</a></li>
+          <li><a href="#" data-link="EMAIL_ADDRESS" class="underline-offset-4 hover:underline"><i class="fa-solid fa-envelope mr-2" aria-hidden="true"></i>Email</a></li>
+          <li><a href="#" data-link="LINKEDIN_URL" class="underline-offset-4 hover:underline"><i class="fa-brands fa-linkedin mr-2" aria-hidden="true"></i>LinkedIn</a></li>
+        </ul>
+      </div>
+      <p class="mt-10 border-t border-[#1d2742] pt-6 text-xs text-[#b7c0d1]">&copy; 2026 Edwin Msilimba</p>
+    </div>
+  </footer>
+</body>
+</html>

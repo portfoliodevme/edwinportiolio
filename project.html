@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Banking Customer Behaviour Clustering | Edwin Msilimba</title>
+  <meta name="description" content="Featured academic project by Edwin Msilimba: unsupervised K-Means clustering of banking customer transaction behaviour to identify unusual behavioural groups for fraud investigation.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Banking Customer Behaviour Clustering | Edwin Msilimba">
+  <meta property="og:description" content="Featured academic project by Edwin Msilimba: unsupervised K-Means clustering of banking customer transaction behaviour to identify unusual behavioural groups for fraud investigation.">
+  <meta property="og:site_name" content="Edwin Msilimba">
+  <meta name="twitter:card" content="summary">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <!-- Tailwind CSS via CDN, intentionally used with no custom configuration (works on GitHub Pages) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="assets/js/main.js" defer></script>
+</head>
+<body class="bg-white text-[#050b1a] antialiased">
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <header class="sticky top-0 z-50 border-b border-[#dde1e8] bg-white">
+    <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
+      <a href="index.html" class="font-display text-base font-semibold text-[#050b1a]">Edwin Msilimba</a>
+      <nav aria-label="Primary" class="hidden items-center gap-7 lg:flex">
+        <a href="index.html" class="flex h-16 items-center border-b-2 px-1 text-sm border-transparent text-[#475063] hover:text-[#050b1a]">Home</a><a href="index.html#about" class="flex h-16 items-center border-b-2 px-1 text-sm border-transparent text-[#475063] hover:text-[#050b1a]">About</a><a href="projects.html" class="flex h-16 items-center border-b-2 px-1 text-sm border-transparent text-[#475063] hover:text-[#050b1a]">Projects</a><a href="project.html" class="flex h-16 items-center border-b-2 px-1 text-sm border-[#050b1a] font-semibold text-[#050b1a]" aria-current="page">Featured Project</a><a href="#" data-link="GITHUB_PROFILE_URL" class="flex h-16 items-center gap-2 border-b-2 border-transparent px-1 text-sm text-[#475063] hover:text-[#050b1a]"><i class="fa-brands fa-github" aria-hidden="true"></i>GitHub</a><a href="index.html#contact" class="flex h-16 items-center border-b-2 border-transparent px-1 text-sm text-[#475063] hover:text-[#050b1a]">Contact</a>
+      </nav>
+      <button id="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-menu"
+        class="flex h-10 w-10 items-center justify-center rounded border border-[#dde1e8] text-[#050b1a] lg:hidden">
+        <i class="fa-solid fa-bars" aria-hidden="true"></i>
+        <span class="sr-only">Toggle navigation menu</span>
+      </button>
+    </div>
+    <nav id="mobile-menu" aria-label="Mobile" class="hidden border-t border-[#dde1e8] bg-white lg:hidden">
+      <a href="index.html" class="block border-l-4 px-4 py-3 text-sm border-transparent text-[#475063]">Home</a><a href="index.html#about" class="block border-l-4 px-4 py-3 text-sm border-transparent text-[#475063]">About</a><a href="projects.html" class="block border-l-4 px-4 py-3 text-sm border-transparent text-[#475063]">Projects</a><a href="project.html" class="block border-l-4 px-4 py-3 text-sm border-[#050b1a] bg-[#f4f5f7] font-semibold" aria-current="page">Featured Project</a><a href="#" data-link="GITHUB_PROFILE_URL" class="block border-l-4 border-transparent px-4 py-3 text-sm text-[#475063]"><i class="fa-brands fa-github mr-2" aria-hidden="true"></i>GitHub</a><a href="index.html#contact" class="block border-l-4 border-transparent px-4 py-3 text-sm text-[#475063]">Contact</a>
+    </nav>
+  </header>
+
+  <noscript>
+    <p class="bg-[#fff8e8] px-5 py-3 text-sm">Resource links need JavaScript. Please enable it, or open the GitHub repository directly.</p>
+  </noscript>
+
+  <main id="main">
+    <!-- Page title -->
+    <section class="border-b border-[#dde1e8] bg-[#f4f5f7]" aria-labelledby="page-title">
+      <div class="mx-auto max-w-6xl px-5 py-12 sm:px-8">
+        <p class="text-sm font-semibold text-[#475063]">Featured Academic Project</p>
+        <h1 id="page-title" class="font-display mt-2 max-w-4xl text-3xl font-bold leading-tight sm:text-4xl">Banking Customer Behaviour Clustering for Fraud Investigation</h1>
+        <dl class="mt-8 grid max-w-3xl gap-6 text-sm sm:grid-cols-3">
+          <div><dt class="text-[#475063]">Developer</dt><dd class="mt-1 font-semibold">Edwin Msilimba</dd></div>
+          <div><dt class="text-[#475063]">Programme</dt><dd class="mt-1 font-semibold">BSc Computer Science</dd></div>
+          <div><dt class="text-[#475063]">Institution</dt><dd class="mt-1 font-semibold">DMI University</dd></div>
+        </dl>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="#" data-link="GITHUB_REPOSITORY_URL" class="inline-flex items-center gap-2 rounded bg-[#050b1a] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#16213d]"><i class="fa-brands fa-github" aria-hidden="true"></i>GitHub Repository</a>
+          <a href="#resources" class="inline-flex items-center gap-2 rounded border border-[#050b1a] px-6 py-3 text-sm font-semibold text-[#050b1a] transition hover:bg-white"><i class="fa-solid fa-folder-open" aria-hidden="true"></i>Project Resources</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick access for the lecturer -->
+    <section class="border-b border-[#dde1e8]" aria-labelledby="quick-title">
+      <div class="mx-auto flex max-w-6xl flex-col gap-4 px-5 py-5 sm:px-8 md:flex-row md:items-center md:justify-between">
+        <h2 id="quick-title" class="text-sm font-semibold">Assessing this project? Go straight to the materials.</h2>
+        <ul class="flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium">
+          <li><a href="#" data-link="SOURCE_CODE_URL" class="inline-flex items-center gap-2 underline underline-offset-4"><i class="fa-solid fa-code" aria-hidden="true"></i>Source code</a></li>
+          <li><a href="#" data-link="DATASET_URL" class="inline-flex items-center gap-2 underline underline-offset-4"><i class="fa-solid fa-database" aria-hidden="true"></i>Dataset</a></li>
+          <li><a href="#" data-link="REPORT_URL" class="inline-flex items-center gap-2 underline underline-offset-4"><i class="fa-solid fa-file-lines" aria-hidden="true"></i>Project report</a></li>
+          <li><a href="#resources" class="inline-flex items-center gap-2 underline underline-offset-4"><i class="fa-solid fa-folder-open" aria-hidden="true"></i>All resources</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="mx-auto grid max-w-6xl gap-12 px-5 py-12 sm:px-8 lg:grid-cols-[13rem_1fr]">
+      <!-- In-page navigation -->
+      <aside class="lg:sticky lg:top-24 lg:self-start" aria-label="On this page">
+        <p class="text-sm font-semibold">On this page</p>
+        <ul class="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm text-[#475063] lg:flex-col lg:gap-y-2">
+          <li><a href="#overview" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Overview</a></li>
+          <li><a href="#problem" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Problem statement</a></li>
+          <li><a href="#objectives" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Objectives</a></li>
+          <li><a href="#stack" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Technology stack</a></li>
+          <li><a href="#workflow" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Methodology</a></li>
+          <li><a href="#dataset" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Dataset</a></li>
+          <li><a href="#kmeans" class="underline-offset-4 hover:text-[#050b1a] hover:underline">K-Means clustering</a></li>
+          <li><a href="#choosing-k" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Number of clusters</a></li>
+          <li><a href="#results" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Results</a></li>
+          <li><a href="#interpretation" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Interpretation</a></li>
+          <li><a href="#limitations" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Limitations</a></li>
+          <li><a href="#resources" class="font-semibold underline-offset-4 hover:text-[#050b1a] hover:underline">Project resources</a></li>
+        </ul>
+      </aside>
+
+      <div class="min-w-0 space-y-16">
+
+        <!-- Overview -->
+        <section id="overview" aria-labelledby="overview-title">
+          <div class="flex flex-wrap items-center gap-3">
+            <h2 id="overview-title" class="font-display text-2xl font-bold">Project overview</h2>
+            <span class="tag tag-explain">Explanatory</span>
+          </div>
+          <div class="mt-4 max-w-3xl space-y-4 text-[#2b3447]">
+            <p>The project groups customers according to their transaction behaviour using unsupervised machine learning. Each customer is described by features that summarise how they transact, and K-Means clustering groups customers who behave in similar ways.</p>
+            <p>The purpose is to discover behavioural patterns and identify unusual groups that may be useful during fraud investigation. The resulting groups can be reviewed through an interface built for the project.</p>
+          </div>
+          <aside class="mt-8 border-l-4 border-[#050b1a] bg-[#f4f5f7] p-6" aria-labelledby="note-title">
+            <h3 id="note-title" class="font-display text-lg font-semibold">Clustering does not prove fraud</h3>
+            <p class="mt-2 max-w-3xl text-[#2b3447]">The clustering system does not prove that a customer is fraudulent. It identifies behavioural groups and unusual patterns that can be investigated further. Human investigators make the final judgement.</p>
+          </aside>
+        </section>
+
+        <!-- Problem -->
+        <section id="problem" aria-labelledby="problem-title">
+          <div class="flex flex-wrap items-center gap-3">
+            <h2 id="problem-title" class="font-display text-2xl font-bold">Problem statement</h2>
+            <span class="tag tag-explain">Explanatory</span>
+          </div>
+          <div class="mt-4 max-w-3xl space-y-4 text-[#2b3447]">
+            <p>Banks process large volumes of transactions, and identifying behavioural patterns in them by hand is difficult. Investigators cannot examine every customer one by one.</p>
+            <p>Customers also transact in very different ways. Unsupervised clustering can help by discovering groups of customers with similar behavioural characteristics. It needs no labelled examples of fraud, and it gives investigators a structured starting point for deciding where to look first.</p>
+          </div>
+        </section>
+
+        <!-- Objectives -->
+        <section id="objectives" aria-labelledby="objectives-title">
+          <h2 id="objectives-title" class="font-display text-2xl font-bold">Objectives</h2>
+          <ol class="mt-6 md:columns-2 md:gap-x-12">
+            <li class="flex break-inside-avoid gap-4 border-t border-[#c5cad4] py-4"><span class="font-display font-bold" aria-hidden="true">1.</span><span>Analyse banking customer transaction behaviour.</span></li>
+            <li class="flex break-inside-avoid gap-4 border-t border-[#c5cad4] py-4"><span class="font-display font-bold" aria-hidden="true">2.</span><span>Prepare and preprocess transaction data.</span></li>
+            <li class="flex break-inside-avoid gap-4 border-t border-[#c5cad4] py-4"><span class="font-display font-bold" aria-hidden="true">3.</span><span>Extract relevant behavioural features.</span></li>
+            <li class="flex break-inside-avoid gap-4 border-t border-[#c5cad4] py-4"><span class="font-display font-bold" aria-hidden="true">4.</span><span>Group customers based on behavioural similarity.</span></li>
+            <li class="flex break-inside-avoid gap-4 border-t border-[#c5cad4] py-4"><span class="font-display font-bold" aria-hidden="true">5.</span><span>Apply K-Means clustering.</span></li>
+            <li class="flex break-inside-avoid gap-4 border-t border-[#c5cad4] py-4"><span class="font-display font-bold" aria-hidden="true">6.</span><span>Visualise customer clusters.</span></li>
+            <li class="flex break-inside-avoid gap-4 border-t border-[#c5cad4] py-4"><span class="font-display font-bold" aria-hidden="true">7.</span><span>Identify unusual behavioural groups.</span></li>
+            <li class="flex break-inside-avoid gap-4 border-t border-[#c5cad4] py-4"><span class="font-display font-bold" aria-hidden="true">8.</span><span>Provide useful insights for further fraud investigation.</span></li>
+          </ol>
+        </section>
+
+        <!-- Technology stack -->
+        <section id="stack" aria-labelledby="stack-title">
+          <h2 id="stack-title" class="font-display text-2xl font-bold">Technology stack</h2>
+          <p class="mt-3 max-w-2xl text-[#475063]">The tools used to build the analysis and its interface.</p>
+          <ul class="mt-6 grid grid-cols-2 gap-3 text-sm sm:grid-cols-3 lg:grid-cols-4">
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-brands fa-python w-5 text-center" aria-hidden="true"></i>Python</li>
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-table w-5 text-center" aria-hidden="true"></i>Pandas</li>
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-calculator w-5 text-center" aria-hidden="true"></i>NumPy</li>
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-circle-nodes w-5 text-center" aria-hidden="true"></i>Scikit-learn</li>
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-bullseye w-5 text-center" aria-hidden="true"></i>K-Means</li>
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-flask w-5 text-center" aria-hidden="true"></i>Flask</li>
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-chart-line w-5 text-center" aria-hidden="true"></i>Matplotlib</li>
+          </ul>
+          <p class="mt-4 max-w-3xl text-sm text-[#475063]">This portfolio website is a static site (HTML, Tailwind CSS and JavaScript) hosted on GitHub Pages. The Flask application lives in the project repository.</p>
+        </section>
+
+        <!-- Workflow -->
+        <section id="workflow" aria-labelledby="workflow-title">
+          <div class="flex flex-wrap items-center gap-3">
+            <h2 id="workflow-title" class="font-display text-2xl font-bold">Methodology</h2>
+            <span class="tag tag-explain">Explanatory</span>
+          </div>
+          <p class="mt-4 max-w-3xl text-[#2b3447]">The work follows nine stages, each feeding the next.</p>
+          <ol class="mt-8 border-l-2 border-[#050b1a]">
+            <li class="relative pb-7 pl-8"><span class="absolute -left-[0.8rem] top-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#050b1a] text-xs font-semibold text-white" aria-hidden="true">1</span><h3 class="font-semibold">Dataset</h3><p class="mt-1 max-w-2xl text-[#2b3447]">The transaction records as obtained from the source, before any changes are made.</p></li>
+            <li class="relative pb-7 pl-8"><span class="absolute -left-[0.8rem] top-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#050b1a] text-xs font-semibold text-white" aria-hidden="true">2</span><h3 class="font-semibold">Data cleaning</h3><p class="mt-1 max-w-2xl text-[#2b3447]">Remove duplicate or invalid records, correct data types and deal with missing values so that later steps work on reliable input.</p></li>
+            <li class="relative pb-7 pl-8"><span class="absolute -left-[0.8rem] top-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#050b1a] text-xs font-semibold text-white" aria-hidden="true">3</span><h3 class="font-semibold">Feature engineering</h3><p class="mt-1 max-w-2xl text-[#2b3447]">Summarise each customer's transactions into measures of behaviour, such as how often and how much the customer transacts. Each customer becomes one row of features.</p></li>
+            <li class="relative pb-7 pl-8"><span class="absolute -left-[0.8rem] top-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#050b1a] text-xs font-semibold text-white" aria-hidden="true">4</span><h3 class="font-semibold">Preprocessing</h3><p class="mt-1 max-w-2xl text-[#2b3447]">Prepare the features for modelling, for example by reshaping heavily skewed values so that a few very large ones do not dominate the result.</p></li>
+            <li class="relative pb-7 pl-8"><span class="absolute -left-[0.8rem] top-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#050b1a] text-xs font-semibold text-white" aria-hidden="true">5</span><h3 class="font-semibold">Feature scaling</h3><p class="mt-1 max-w-2xl text-[#2b3447]">Put all features on a comparable scale. K-Means relies on distance, so a feature measured in large numbers would otherwise outweigh the others.</p></li>
+            <li class="relative pb-7 pl-8"><span class="absolute -left-[0.8rem] top-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#050b1a] text-xs font-semibold text-white" aria-hidden="true">6</span><h3 class="font-semibold">K-Means clustering</h3><p class="mt-1 max-w-2xl text-[#2b3447]">Group customers into a chosen number of clusters, so that customers in the same cluster are close together in feature space.</p></li>
+            <li class="relative pb-7 pl-8"><span class="absolute -left-[0.8rem] top-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#050b1a] text-xs font-semibold text-white" aria-hidden="true">7</span><h3 class="font-semibold">Cluster evaluation</h3><p class="mt-1 max-w-2xl text-[#2b3447]">Check how well separated and compact the clusters are, and use this to support the choice of the number of clusters.</p></li>
+            <li class="relative pb-7 pl-8"><span class="absolute -left-[0.8rem] top-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#050b1a] text-xs font-semibold text-white" aria-hidden="true">8</span><h3 class="font-semibold">Visualisation</h3><p class="mt-1 max-w-2xl text-[#2b3447]">Plot the clusters and their sizes so that the groups can be seen and compared.</p></li>
+            <li class="relative pl-8"><span class="absolute -left-[0.8rem] top-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#050b1a] text-xs font-semibold text-white" aria-hidden="true">9</span><h3 class="font-semibold">Behavioural analysis</h3><p class="mt-1 max-w-2xl text-[#2b3447]">Describe each cluster by the typical feature values of its customers, in plain language, and flag groups that differ markedly from the rest for investigators to review.</p></li>
+          </ol>
+        </section>
+
+        <!-- Dataset -->
+        <section id="dataset" aria-labelledby="dataset-title">
+          <div class="flex flex-wrap items-center gap-3">
+            <h2 id="dataset-title" class="font-display text-2xl font-bold">Dataset</h2>
+            <span class="tag tag-result">Project result</span>
+          </div>
+          <p class="mt-4 max-w-3xl text-[#2b3447]">Replace each highlighted placeholder with the real value from the project. Do not publish estimated figures.</p>
+          <dl class="mt-6 grid border-t border-[#dde1e8] sm:grid-cols-2">
+            <div class="border-b border-[#dde1e8] py-4 sm:pr-6"><dt class="text-sm text-[#475063]">Dataset source</dt><dd class="mt-1"><span class="ph">[DATASET SOURCE]</span></dd></div>
+            <div class="border-b border-[#dde1e8] py-4 sm:pr-6"><dt class="text-sm text-[#475063]">Number of records</dt><dd class="mt-1"><span class="ph">[NUMBER OF RECORDS]</span></dd></div>
+            <div class="border-b border-[#dde1e8] py-4 sm:pr-6"><dt class="text-sm text-[#475063]">Number of features</dt><dd class="mt-1"><span class="ph">[NUMBER OF FEATURES]</span></dd></div>
+            <div class="border-b border-[#dde1e8] py-4 sm:pr-6"><dt class="text-sm text-[#475063]">Dataset format</dt><dd class="mt-1"><span class="ph">[CSV / OTHER]</span></dd></div>
+            <div class="border-b border-[#dde1e8] py-4 sm:pr-6"><dt class="text-sm text-[#475063]">Important features</dt><dd class="mt-1"><span class="ph">[LIST FEATURES]</span></dd></div>
+          </dl>
+
+          <h3 class="font-display mt-10 text-lg font-semibold">Features used for clustering</h3>
+          <div class="mt-4 overflow-x-auto border border-[#dde1e8]">
+            <table class="w-full min-w-[34rem] text-left text-sm">
+              <caption class="sr-only">Features used for clustering</caption>
+              <thead class="bg-[#f4f5f7]">
+                <tr>
+                  <th scope="col" class="px-4 py-3 font-semibold">Feature</th>
+                  <th scope="col" class="px-4 py-3 font-semibold">What it describes</th>
+                  <th scope="col" class="px-4 py-3 font-semibold">Original or engineered</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-[#dde1e8]">
+                <tr><td class="px-4 py-3"><span class="ph">[FEATURE_NAME_1]</span></td><td class="px-4 py-3"><span class="ph">[DESCRIPTION]</span></td><td class="px-4 py-3"><span class="ph">[ORIGINAL / ENGINEERED]</span></td></tr>
+                <tr><td class="px-4 py-3"><span class="ph">[FEATURE_NAME_2]</span></td><td class="px-4 py-3"><span class="ph">[DESCRIPTION]</span></td><td class="px-4 py-3"><span class="ph">[ORIGINAL / ENGINEERED]</span></td></tr>
+                <tr><td class="px-4 py-3"><span class="ph">[FEATURE_NAME_3]</span></td><td class="px-4 py-3"><span class="ph">[DESCRIPTION]</span></td><td class="px-4 py-3"><span class="ph">[ORIGINAL / ENGINEERED]</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 class="font-display mt-10 text-lg font-semibold">Data preprocessing</h3>
+          <ul class="mt-4 divide-y divide-[#dde1e8] border-y border-[#dde1e8] text-[#2b3447]">
+            <li class="grid gap-1 py-4 md:grid-cols-[14rem_1fr] md:gap-8"><span class="font-semibold">Data cleaning</span><span><span class="ph">[DESCRIBE_CLEANING_STEPS]</span></span></li>
+            <li class="grid gap-1 py-4 md:grid-cols-[14rem_1fr] md:gap-8"><span class="font-semibold">Missing values</span><span><span class="ph">[DESCRIBE_MISSING_VALUE_HANDLING]</span></span></li>
+            <li class="grid gap-1 py-4 md:grid-cols-[14rem_1fr] md:gap-8"><span class="font-semibold">Outliers</span><span><span class="ph">[DESCRIBE_OUTLIER_HANDLING]</span></span></li>
+            <li class="grid gap-1 py-4 md:grid-cols-[14rem_1fr] md:gap-8"><span class="font-semibold">Feature transformation</span><span><span class="ph">[DESCRIBE_TRANSFORMATION_OR_STATE_NONE]</span></span></li>
+            <li class="grid gap-1 py-4 md:grid-cols-[14rem_1fr] md:gap-8"><span class="font-semibold">Feature scaling</span><span><span class="ph">[SCALING_METHOD_USED]</span></span></li>
+          </ul>
+        </section>
+
+        <!-- K-Means -->
+        <section id="kmeans" aria-labelledby="kmeans-title">
+          <div class="flex flex-wrap items-center gap-3">
+            <h2 id="kmeans-title" class="font-display text-2xl font-bold">K-Means clustering</h2>
+            <span class="tag tag-explain">Explanatory</span>
+          </div>
+          <dl class="mt-6 divide-y divide-[#dde1e8] border-y border-[#dde1e8]">
+            <div class="grid gap-2 py-5 md:grid-cols-[14rem_1fr] md:gap-8"><dt class="font-display text-lg font-semibold">What K-Means is</dt><dd class="max-w-3xl text-[#2b3447]">K-Means is an unsupervised algorithm that splits data into <em>k</em> groups, called clusters. It needs no labels. It looks only at how close the data points are to each other.</dd></div>
+            <div class="grid gap-2 py-5 md:grid-cols-[14rem_1fr] md:gap-8"><dt class="font-display text-lg font-semibold">Why it suits this project</dt><dd class="max-w-3xl text-[#2b3447]">Fraud examples are rare and often unlabelled, so a method that works without labels fits the problem. K-Means is also simple to explain, quick to run on many customers, and gives clusters that can be described by their average behaviour.</dd></div>
+            <div class="grid gap-2 py-5 md:grid-cols-[14rem_1fr] md:gap-8"><dt class="font-display text-lg font-semibold">Customers as feature vectors</dt><dd class="max-w-3xl text-[#2b3447]">Each customer is represented by a list of numbers, one per feature, such as transaction count or average amount. This list is the customer's feature vector, and it places the customer at a point in feature space.</dd></div>
+            <div class="grid gap-2 py-5 md:grid-cols-[14rem_1fr] md:gap-8"><dt class="font-display text-lg font-semibold">Centroids and assignment</dt><dd class="max-w-3xl space-y-3 text-[#2b3447]"><span class="block">The algorithm starts with <em>k</em> initial centroids. Each customer is assigned to the nearest centroid, measured by Euclidean distance. Each centroid is then moved to the mean of the feature vectors assigned to it. These two steps repeat until the assignments stop changing or an iteration limit is reached.</span><span class="block"><code class="bg-[#f4f5f7] px-1.5 py-0.5 text-sm">centroid = mean of all feature vectors in the cluster</code></span></dd></div>
+            <div class="grid gap-2 py-5 md:grid-cols-[14rem_1fr] md:gap-8"><dt class="font-display text-lg font-semibold">Interpreting the final clusters</dt><dd class="max-w-3xl text-[#2b3447]">Once the clusters are fixed, each centroid is read as the typical customer of its cluster. Comparing centroids and cluster sizes shows which groups are common, which are small, and which behave very differently from the rest.</dd></div>
+          </dl>
+        </section>
+
+        <!-- Choosing k -->
+        <section id="choosing-k" aria-labelledby="choosing-k-title">
+          <div class="flex flex-wrap items-center gap-3">
+            <h2 id="choosing-k-title" class="font-display text-2xl font-bold">Choosing the number of clusters</h2>
+            <span class="tag tag-explain">Explanatory</span>
+          </div>
+          <p class="mt-4 max-w-3xl text-[#2b3447]">K-Means needs the number of clusters, <em>k</em>, to be chosen before it runs. Two common ways to support that choice are described below.</p>
+          <div class="mt-6 grid gap-8 md:grid-cols-2">
+            <div class="border-t-2 border-[#050b1a] pt-4">
+              <h3 class="font-display text-lg font-semibold">Elbow method</h3>
+              <p class="mt-2 text-[#2b3447]">Run K-Means for a range of <em>k</em> values and plot the total within-cluster distance (inertia) for each. The distance always falls as <em>k</em> grows, but the improvement slows down. The point where the curve bends, the elbow, suggests a sensible <em>k</em>.</p>
+            </div>
+            <div class="border-t-2 border-[#050b1a] pt-4">
+              <h3 class="font-display text-lg font-semibold">Silhouette score</h3>
+              <p class="mt-2 text-[#2b3447]">For each customer, compare the average distance to the others in its own cluster with the average distance to the nearest other cluster. Scores run from -1 to 1, and higher values mean better separated clusters. The <em>k</em> with the highest average score is preferred.</p>
+            </div>
+          </div>
+          <div class="mt-8 border border-[#dde1e8] p-5">
+            <div class="flex flex-wrap items-center gap-3">
+              <h3 class="font-display text-lg font-semibold">Used in this project</h3>
+              <span class="tag tag-result">Project result</span>
+            </div>
+            <dl class="mt-3 grid gap-4 sm:grid-cols-2">
+              <div><dt class="text-sm text-[#475063]">Method used</dt><dd class="mt-1"><span class="ph">[ELBOW_METHOD / SILHOUETTE_SCORE / BOTH]</span></dd></div>
+              <div><dt class="text-sm text-[#475063]">Selected number of clusters (k)</dt><dd class="mt-1"><span class="ph">[NUMBER_OF_CLUSTERS]</span></dd></div>
+            </dl>
+          </div>
+        </section>
+
+        <!-- Results -->
+        <section id="results" aria-labelledby="results-title">
+          <div class="flex flex-wrap items-center gap-3">
+            <h2 id="results-title" class="font-display text-2xl font-bold">Results</h2>
+            <span class="tag tag-result">Project result</span>
+          </div>
+          <p class="mt-4 max-w-3xl text-[#2b3447]">Each panel shows a clearly labelled placeholder until the matching image file is added to the <code class="bg-[#f4f5f7] px-1.5 py-0.5 text-sm">assets/images/</code> folder. When the file exists, it replaces the placeholder automatically. No charts or figures are invented here.</p>
+          <div class="mt-8 space-y-12">
+            <figure data-image="assets/images/cluster-results.png" data-alt="Visualisation of the final customer clusters">
+              <figcaption class="mb-3 flex flex-wrap items-center gap-3"><span class="font-display text-lg font-semibold">Cluster visualisation</span><span data-status class="tag tag-result">Placeholder</span></figcaption>
+              <div data-placeholder class="flex min-h-[14rem] flex-col items-center justify-center gap-2 border border-dashed border-[#9aa3b5] bg-[#f4f5f7] p-6 text-center">
+                <i class="fa-regular fa-image text-2xl text-[#475063]" aria-hidden="true"></i>
+                <p class="font-semibold">Insert actual cluster visualisation here</p>
+                <p class="text-sm text-[#475063]">Add the file as assets/images/cluster-results.png.</p>
+              </div>
+            </figure>
+            <figure data-image="assets/images/pca-visualisation.png" data-alt="PCA plot of customers coloured by cluster">
+              <figcaption class="mb-3 flex flex-wrap items-center gap-3"><span class="font-display text-lg font-semibold">PCA visualisation</span><span data-status class="tag tag-result">Placeholder</span></figcaption>
+              <div data-placeholder class="flex min-h-[14rem] flex-col items-center justify-center gap-2 border border-dashed border-[#9aa3b5] bg-[#f4f5f7] p-6 text-center">
+                <i class="fa-regular fa-image text-2xl text-[#475063]" aria-hidden="true"></i>
+                <p class="font-semibold">Insert actual PCA plot here</p>
+                <p class="text-sm text-[#475063]">Add the file as assets/images/pca-visualisation.png. If PCA was not used, delete this panel.</p>
+              </div>
+            </figure>
+            <figure data-image="assets/images/cluster-distribution.png" data-alt="Bar chart of the number of customers in each cluster">
+              <figcaption class="mb-3 flex flex-wrap items-center gap-3"><span class="font-display text-lg font-semibold">Cluster distribution</span><span data-status class="tag tag-result">Placeholder</span></figcaption>
+              <div data-placeholder class="flex min-h-[14rem] flex-col items-center justify-center gap-2 border border-dashed border-[#9aa3b5] bg-[#f4f5f7] p-6 text-center">
+                <i class="fa-regular fa-image text-2xl text-[#475063]" aria-hidden="true"></i>
+                <p class="font-semibold">Insert actual cluster distribution chart here</p>
+                <p class="text-sm text-[#475063]">Add the file as assets/images/cluster-distribution.png.</p>
+              </div>
+            </figure>
+            <figure data-image="assets/images/behavioural-analysis.png" data-alt="Chart or table comparing the average behaviour of each cluster">
+              <figcaption class="mb-3 flex flex-wrap items-center gap-3"><span class="font-display text-lg font-semibold">Behavioural analysis</span><span data-status class="tag tag-result">Placeholder</span></figcaption>
+              <div data-placeholder class="flex min-h-[14rem] flex-col items-center justify-center gap-2 border border-dashed border-[#9aa3b5] bg-[#f4f5f7] p-6 text-center">
+                <i class="fa-regular fa-image text-2xl text-[#475063]" aria-hidden="true"></i>
+                <p class="font-semibold">Insert actual behavioural analysis here</p>
+                <p class="text-sm text-[#475063]">Add the file as assets/images/behavioural-analysis.png.</p>
+              </div>
+            </figure>
+            <figure data-image="assets/images/other-graphs.png" data-alt="Other graphs produced by the project">
+              <figcaption class="mb-3 flex flex-wrap items-center gap-3"><span class="font-display text-lg font-semibold">Other relevant graphs</span><span data-status class="tag tag-result">Placeholder</span></figcaption>
+              <div data-placeholder class="flex min-h-[14rem] flex-col items-center justify-center gap-2 border border-dashed border-[#9aa3b5] bg-[#f4f5f7] p-6 text-center">
+                <i class="fa-regular fa-image text-2xl text-[#475063]" aria-hidden="true"></i>
+                <p class="font-semibold">Insert any other relevant graph here</p>
+                <p class="text-sm text-[#475063]">Add the file as assets/images/other-graphs.png. Duplicate this panel for each extra graph.</p>
+              </div>
+            </figure>
+          </div>
+        </section>
+
+        <!-- Interpretation -->
+        <section id="interpretation" aria-labelledby="interpretation-title">
+          <div class="flex flex-wrap items-center gap-3">
+            <h2 id="interpretation-title" class="font-display text-2xl font-bold">Interpretation</h2>
+            <span class="tag tag-explain">Explanatory</span>
+          </div>
+          <p class="mt-4 max-w-3xl text-[#2b3447]">Clusters are interpreted by reading each cluster's typical feature values and comparing it with the others. The table below shows the idea using <strong>invented examples only</strong>. They are not findings from this project.</p>
+          <div class="mt-6 overflow-x-auto border border-[#dde1e8]">
+            <table class="w-full min-w-[36rem] text-left text-sm">
+              <caption class="sr-only">Example cluster interpretations. Illustrative only.</caption>
+              <thead class="bg-[#f4f5f7]">
+                <tr>
+                  <th scope="col" class="px-4 py-3 font-semibold">Example cluster</th>
+                  <th scope="col" class="px-4 py-3 font-semibold">Example behaviour</th>
+                  <th scope="col" class="px-4 py-3 font-semibold">How an investigator might read it</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-[#dde1e8]">
+                <tr><th scope="row" class="px-4 py-3 font-semibold">Cluster 1</th><td class="px-4 py-3">Low transaction frequency and low transaction values.</td><td class="px-4 py-3">Low-activity customers, usually no immediate follow-up.</td></tr>
+                <tr><th scope="row" class="px-4 py-3 font-semibold">Cluster 2</th><td class="px-4 py-3">High transaction frequency and moderate transaction values.</td><td class="px-4 py-3">Very active everyday customers.</td></tr>
+                <tr><th scope="row" class="px-4 py-3 font-semibold">Cluster 3</th><td class="px-4 py-3">High transaction values and unusual transaction patterns.</td><td class="px-4 py-3">A candidate group for closer review, not proof of fraud.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="mt-8 border border-[#dde1e8] p-5">
+            <div class="flex flex-wrap items-center gap-3">
+              <h3 class="font-display text-lg font-semibold">Actual findings of this project</h3>
+              <span class="tag tag-result">Project result</span>
+            </div>
+            <p class="mt-3 text-[#2b3447]"><span class="ph">[DESCRIBE_ACTUAL_CLUSTER_FINDINGS]</span></p>
+          </div>
+        </section>
+
+        <!-- Limitations -->
+        <section id="limitations" aria-labelledby="limitations-title">
+          <div class="flex flex-wrap items-center gap-3">
+            <h2 id="limitations-title" class="font-display text-2xl font-bold">Limitations</h2>
+            <span class="tag tag-explain">Explanatory</span>
+          </div>
+          <ul class="mt-4 max-w-3xl list-disc space-y-2 pl-5 text-[#2b3447]">
+            <li>There are no fraud labels, so the project cannot report a fraud detection rate or accuracy. Clusters are leads for investigation only.</li>
+            <li>K-Means works best with compact, roughly round clusters and can struggle with other shapes.</li>
+            <li>Results depend on the features chosen, how they were scaled, and the number of clusters selected.</li>
+            <li>Outliers can pull centroids away from typical behaviour, and results can vary with the initial centroids.</li>
+            <li>An unusual cluster can contain legitimate customers, and fraud can sit inside an ordinary-looking cluster.</li>
+            <li><span class="ph">[ADD_PROJECT_SPECIFIC_LIMITATIONS]</span></li>
+          </ul>
+        </section>
+      </div>
+    </div>
+
+    <!-- Project resources -->
+    <section id="resources" class="border-t border-[#dde1e8] bg-[#f4f5f7]" aria-labelledby="resources-title">
+      <div class="mx-auto max-w-6xl px-5 py-16 sm:px-8">
+        <h2 id="resources-title" class="font-display text-3xl font-bold">Project Resources</h2>
+        <p class="mt-3 max-w-2xl text-[#475063]">Everything submitted for this project, in one place. Each item opens in a new tab.</p>
+        <ul class="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <li class="flex flex-col p-7 transition border border-[#dde1e8] bg-white hover:border-[#050b1a]">
+            <span class="flex h-12 w-12 items-center justify-center rounded bg-[#050b1a] text-white"><i class="fa-solid fa-code text-xl" aria-hidden="true"></i></span>
+            <h3 class="font-display mt-5 text-xl font-semibold">Source Code</h3>
+            <p class="mt-2 text-[#2b3447]">View the complete source code</p>
+            <div class="mt-auto pt-6"><a href="#" data-link="SOURCE_CODE_URL" class="inline-flex items-center justify-center gap-2 rounded px-6 py-3 text-sm font-semibold transition bg-[#050b1a] text-white hover:bg-[#16213d]"><i class="fa-solid fa-arrow-up-right-from-square text-xs" aria-hidden="true"></i>View Source Code</a></div>
+          </li>
+          <li class="flex flex-col p-7 transition border border-[#dde1e8] bg-white hover:border-[#050b1a]">
+            <span class="flex h-12 w-12 items-center justify-center rounded bg-[#050b1a] text-white"><i class="fa-solid fa-database text-xl" aria-hidden="true"></i></span>
+            <h3 class="font-display mt-5 text-xl font-semibold">Dataset</h3>
+            <p class="mt-2 text-[#2b3447]">Access the dataset used for the project</p>
+            <div class="mt-auto pt-6"><a href="#" data-link="DATASET_URL" class="inline-flex items-center justify-center gap-2 rounded px-6 py-3 text-sm font-semibold transition bg-[#050b1a] text-white hover:bg-[#16213d]"><i class="fa-solid fa-arrow-up-right-from-square text-xs" aria-hidden="true"></i>Access Dataset</a></div>
+          </li>
+          <li class="flex flex-col p-7 transition border border-[#dde1e8] bg-white hover:border-[#050b1a]">
+            <span class="flex h-12 w-12 items-center justify-center rounded bg-[#050b1a] text-white"><i class="fa-solid fa-book text-xl" aria-hidden="true"></i></span>
+            <h3 class="font-display mt-5 text-xl font-semibold">Documentation</h3>
+            <p class="mt-2 text-[#2b3447]">Read the technical documentation</p>
+            <div class="mt-auto pt-6"><a href="#" data-link="DOCUMENTATION_URL" class="inline-flex items-center justify-center gap-2 rounded px-6 py-3 text-sm font-semibold transition bg-[#050b1a] text-white hover:bg-[#16213d]"><i class="fa-solid fa-arrow-up-right-from-square text-xs" aria-hidden="true"></i>Read Documentation</a></div>
+          </li>
+          <li class="flex flex-col p-7 transition border border-[#dde1e8] bg-white hover:border-[#050b1a]">
+            <span class="flex h-12 w-12 items-center justify-center rounded bg-[#050b1a] text-white"><i class="fa-solid fa-file-lines text-xl" aria-hidden="true"></i></span>
+            <h3 class="font-display mt-5 text-xl font-semibold">Project Report</h3>
+            <p class="mt-2 text-[#2b3447]">View the complete academic report</p>
+            <div class="mt-auto pt-6"><a href="#" data-link="REPORT_URL" class="inline-flex items-center justify-center gap-2 rounded px-6 py-3 text-sm font-semibold transition bg-[#050b1a] text-white hover:bg-[#16213d]"><i class="fa-solid fa-arrow-up-right-from-square text-xs" aria-hidden="true"></i>View Report</a></div>
+          </li>
+          <li class="flex flex-col p-7 transition border border-[#dde1e8] bg-white hover:border-[#050b1a]">
+            <span class="flex h-12 w-12 items-center justify-center rounded bg-[#050b1a] text-white"><i class="fa-solid fa-chart-pie text-xl" aria-hidden="true"></i></span>
+            <h3 class="font-display mt-5 text-xl font-semibold">Results</h3>
+            <p class="mt-2 text-[#2b3447]">View project results and visualisations</p>
+            <div class="mt-auto pt-6"><a href="#" data-link="RESULTS_URL" class="inline-flex items-center justify-center gap-2 rounded px-6 py-3 text-sm font-semibold transition bg-[#050b1a] text-white hover:bg-[#16213d]"><i class="fa-solid fa-arrow-up-right-from-square text-xs" aria-hidden="true"></i>View Results</a></div>
+          </li>
+          <li class="flex flex-col p-7 transition border border-[#dde1e8] bg-white hover:border-[#050b1a]">
+            <span class="flex h-12 w-12 items-center justify-center rounded bg-[#050b1a] text-white"><i class="fa-brands fa-markdown text-xl" aria-hidden="true"></i></span>
+            <h3 class="font-display mt-5 text-xl font-semibold">README</h3>
+            <p class="mt-2 text-[#2b3447]">View installation and reproduction instructions</p>
+            <div class="mt-auto pt-6"><a href="#" data-link="README_URL" class="inline-flex items-center justify-center gap-2 rounded px-6 py-3 text-sm font-semibold transition bg-[#050b1a] text-white hover:bg-[#16213d]"><i class="fa-solid fa-arrow-up-right-from-square text-xs" aria-hidden="true"></i>View README</a></div>
+          </li>
+          <li class="flex flex-col p-7 transition on-dark border border-[#050b1a] bg-[#050b1a] text-white">
+            <span class="flex h-12 w-12 items-center justify-center rounded bg-white text-[#050b1a]"><i class="fa-brands fa-github text-xl" aria-hidden="true"></i></span>
+            <h3 class="font-display mt-5 text-xl font-semibold">GitHub Repository</h3>
+            <p class="mt-2 text-[#d6dcea]">Open the complete project repository</p>
+            <div class="mt-auto pt-6"><a href="#" data-link="GITHUB_REPOSITORY_URL" class="inline-flex items-center justify-center gap-2 rounded px-6 py-3 text-sm font-semibold transition bg-white text-[#050b1a] hover:bg-[#e6e9f0]"><i class="fa-solid fa-arrow-up-right-from-square text-xs" aria-hidden="true"></i>Open Repository</a></div>
+          </li>
+        </ul>
+
+        <div class="mt-14 grid gap-10 lg:grid-cols-[1fr_1.2fr]">
+          <div>
+            <h3 class="font-display text-xl font-semibold">The repository contains</h3>
+            <ul class="mt-4 grid gap-x-6 gap-y-2 text-sm text-[#2b3447] sm:grid-cols-2">
+              <li><i class="fa-solid fa-check mr-2 text-[#475063]" aria-hidden="true"></i>Source code</li>
+              <li><i class="fa-solid fa-check mr-2 text-[#475063]" aria-hidden="true"></i>Dataset or dataset reference</li>
+              <li><i class="fa-solid fa-check mr-2 text-[#475063]" aria-hidden="true"></i>Machine learning files</li>
+              <li><i class="fa-solid fa-check mr-2 text-[#475063]" aria-hidden="true"></i>Documentation</li>
+              <li><i class="fa-solid fa-check mr-2 text-[#475063]" aria-hidden="true"></i>Project report</li>
+              <li><i class="fa-solid fa-check mr-2 text-[#475063]" aria-hidden="true"></i>Results</li>
+              <li><i class="fa-solid fa-check mr-2 text-[#475063]" aria-hidden="true"></i>Screenshots</li>
+              <li><i class="fa-solid fa-check mr-2 text-[#475063]" aria-hidden="true"></i>README</li>
+              <li><i class="fa-solid fa-check mr-2 text-[#475063]" aria-hidden="true"></i>Requirements and dependencies</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-display text-xl font-semibold">Reproducing the project</h3>
+            <p class="mt-2 text-sm text-[#475063]">The exact commands are in the repository README.</p>
+            <ol class="mt-4 text-sm text-[#2b3447]">
+              <li class="flex gap-4 border-t border-[#dde1e8] py-4"><span class="font-display font-bold" aria-hidden="true">1.</span><span><span class="font-semibold">Clone the repository.</span> Download a copy of the project.</span></li>
+              <li class="flex gap-4 border-t border-[#dde1e8] py-4"><span class="font-display font-bold" aria-hidden="true">2.</span><span><span class="font-semibold">Install dependencies.</span> Install the Python packages in the requirements file.</span></li>
+              <li class="flex gap-4 border-t border-[#dde1e8] py-4"><span class="font-display font-bold" aria-hidden="true">3.</span><span><span class="font-semibold">Obtain the dataset.</span> Get it from the dataset link above and place it in the folder named in the README.</span></li>
+              <li class="flex gap-4 border-t border-[#dde1e8] py-4"><span class="font-display font-bold" aria-hidden="true">4.</span><span><span class="font-semibold">Run preprocessing and training.</span> Prepare the data and fit the K-Means model.</span></li>
+              <li class="flex gap-4 border-t border-[#dde1e8] py-4"><span class="font-display font-bold" aria-hidden="true">5.</span><span><span class="font-semibold">Start the application.</span> Launch the Flask application on your own computer.</span></li>
+              <li class="flex gap-4 border-t border-[#dde1e8] py-4"><span class="font-display font-bold" aria-hidden="true">6.</span><span><span class="font-semibold">Review the clusters.</span> Open the interface and inspect the clustering results.</span></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Back to portfolio -->
+    <section class="on-dark bg-[#050b1a] text-white" aria-labelledby="back-title">
+      <div class="mx-auto flex max-w-6xl flex-col gap-6 px-5 py-12 sm:px-8 md:flex-row md:items-center md:justify-between">
+        <div>
+          <h2 id="back-title" class="font-display text-2xl font-bold">More from Edwin Msilimba</h2>
+          <p class="mt-2 max-w-xl text-[#b7c0d1]">See the other projects and the skills behind this work.</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a href="projects.html" class="rounded bg-white px-6 py-3 text-sm font-semibold text-[#050b1a] transition hover:bg-[#e6e9f0]">All Projects</a>
+          <a href="index.html" class="rounded border border-white px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#16213d]">About Edwin</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="on-dark bg-[#050b1a] text-white">
+    <div class="mx-auto max-w-6xl px-5 py-12 sm:px-8">
+      <div class="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
+        <div>
+          <p class="font-display text-lg font-semibold">Edwin Msilimba</p>
+          <p class="mt-3 text-sm text-[#b7c0d1]">BSc Computer Science<br>DMI University</p>
+        </div>
+        <ul class="space-y-3 text-sm" aria-label="Footer pages">
+          <li><a href="index.html" class="underline-offset-4 hover:underline">Home</a></li>
+          <li><a href="projects.html" class="underline-offset-4 hover:underline">Projects</a></li>
+          <li><a href="project.html" class="underline-offset-4 hover:underline">Featured Project</a></li>
+        </ul>
+        <ul class="space-y-3 text-sm" aria-label="Contact links">
+          <li><a href="#" data-link="GITHUB_PROFILE_URL" class="underline-offset-4 hover:underline"><i class="fa-brands fa-github mr-2" aria-hidden="true"></i>GitHub</a></li>
+          <li><a href="#" data-link="EMAIL_ADDRESS" class="underline-offset-4 hover:underline"><i class="fa-solid fa-envelope mr-2" aria-hidden="true"></i>Email</a></li>
+          <li><a href="#" data-link="LINKEDIN_URL" class="underline-offset-4 hover:underline"><i class="fa-brands fa-linkedin mr-2" aria-hidden="true"></i>LinkedIn</a></li>
+        </ul>
+      </div>
+      <p class="mt-10 border-t border-[#1d2742] pt-6 text-xs text-[#b7c0d1]">&copy; 2026 Edwin Msilimba</p>
+    </div>
+  </footer>
+</body>
+</html>
