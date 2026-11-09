@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ODBRMS: Organisational Data Backup &amp; Recovery | Edwin Msilimba</title>
+  <meta name="description" content="Systems project by Edwin Msilimba: ODBRMS, a Flask and MySQL web application for scheduled file and database backups, SHA-256 verification, safe restores, retention and audit logging.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ODBRMS: Organisational Data Backup &amp; Recovery | Edwin Msilimba">
+  <meta property="og:description" content="A Flask and MySQL backup and recovery management system with scheduled backups, integrity verification, safe restores, retention and audit logging.">
+  <meta property="og:site_name" content="Edwin Msilimba">
+  <meta name="twitter:card" content="summary">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <!-- Tailwind CSS via CDN, intentionally used with no custom configuration (works on GitHub Pages) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="assets/js/main.js" defer></script>
+</head>
+<body class="bg-white text-[#050b1a] antialiased">
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <header class="sticky top-0 z-50 border-b border-[#dde1e8] bg-white">
+    <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
+      <a href="index.html" class="font-display text-base font-semibold text-[#050b1a]">Edwin Msilimba</a>
+      <nav aria-label="Primary" class="hidden items-center gap-7 lg:flex">
+        <a href="index.html" class="flex h-16 items-center border-b-2 px-1 text-sm border-transparent text-[#475063] hover:text-[#050b1a]">Home</a><a href="index.html#about" class="flex h-16 items-center border-b-2 px-1 text-sm border-transparent text-[#475063] hover:text-[#050b1a]">About</a><a href="projects.html" class="flex h-16 items-center border-b-2 px-1 text-sm border-transparent text-[#475063] hover:text-[#050b1a]">Projects</a><a href="project.html" class="flex h-16 items-center border-b-2 px-1 text-sm border-transparent text-[#475063] hover:text-[#050b1a]">Featured Project</a><a href="odbrms.html" class="flex h-16 items-center border-b-2 px-1 text-sm border-[#050b1a] font-semibold text-[#050b1a]" aria-current="page">ODBRMS</a><a href="https://github.com/Edoh478/" target="_blank" rel="noopener noreferrer" class="flex h-16 items-center gap-2 border-b-2 border-transparent px-1 text-sm text-[#475063] hover:text-[#050b1a]"><i class="fa-brands fa-github" aria-hidden="true"></i>GitHub</a><a href="index.html#contact" class="flex h-16 items-center border-b-2 border-transparent px-1 text-sm text-[#475063] hover:text-[#050b1a]">Contact</a>
+      </nav>
+      <button id="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-menu"
+        class="flex h-10 w-10 items-center justify-center rounded border border-[#dde1e8] text-[#050b1a] lg:hidden">
+        <i class="fa-solid fa-bars" aria-hidden="true"></i>
+        <span class="sr-only">Toggle navigation menu</span>
+      </button>
+    </div>
+    <nav id="mobile-menu" aria-label="Mobile" class="hidden border-t border-[#dde1e8] bg-white lg:hidden">
+      <a href="index.html" class="block border-l-4 px-4 py-3 text-sm border-transparent text-[#475063]">Home</a><a href="index.html#about" class="block border-l-4 px-4 py-3 text-sm border-transparent text-[#475063]">About</a><a href="projects.html" class="block border-l-4 px-4 py-3 text-sm border-transparent text-[#475063]">Projects</a><a href="project.html" class="block border-l-4 px-4 py-3 text-sm border-transparent text-[#475063]">Featured Project</a><a href="odbrms.html" class="block border-l-4 px-4 py-3 text-sm border-[#050b1a] bg-[#f4f5f7] font-semibold" aria-current="page">ODBRMS</a><a href="https://github.com/Edoh478/" target="_blank" rel="noopener noreferrer" class="block border-l-4 border-transparent px-4 py-3 text-sm text-[#475063]"><i class="fa-brands fa-github mr-2" aria-hidden="true"></i>GitHub</a><a href="index.html#contact" class="block border-l-4 border-transparent px-4 py-3 text-sm text-[#475063]">Contact</a>
+    </nav>
+  </header>
+
+  <noscript>
+    <p class="bg-[#fff8e8] px-5 py-3 text-sm">All project information is on this page. Use the GitHub repository link for the source code.</p>
+  </noscript>
+
+  <main id="main">
+    <!-- Page title -->
+    <section class="border-b border-[#dde1e8] bg-[#f4f5f7]" aria-labelledby="page-title">
+      <div class="mx-auto max-w-6xl px-5 py-12 sm:px-8">
+        <p class="text-sm font-semibold text-[#475063]">Systems Project &middot; Web Development</p>
+        <h1 id="page-title" class="font-display mt-2 max-w-4xl text-3xl font-bold leading-tight sm:text-4xl">ODBRMS: Organisational Data Backup &amp; Recovery Management System</h1>
+        <p class="mt-5 max-w-3xl text-lg text-[#2b3447]">A full-stack Flask and MySQL web application for protecting organisational files and databases through scheduled backups, integrity verification, safe recovery, retention rules and audit logging.</p>
+        <dl class="mt-8 grid max-w-3xl gap-6 text-sm sm:grid-cols-3">
+          <div><dt class="text-[#475063]">Developer</dt><dd class="mt-1 font-semibold">Edwin Msilimba</dd></div>
+          <div><dt class="text-[#475063]">Programme</dt><dd class="mt-1 font-semibold">BSc Computer Science</dd></div>
+          <div><dt class="text-[#475063]">Institution</dt><dd class="mt-1 font-semibold">DMI University</dd></div>
+        </dl>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="https://github.com/portfoliodevme/backup" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded bg-[#050b1a] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#16213d]"><i class="fa-brands fa-github" aria-hidden="true"></i>GitHub Repository</a>
+          <a href="#resources" class="inline-flex items-center gap-2 rounded border border-[#050b1a] px-6 py-3 text-sm font-semibold text-[#050b1a] transition hover:bg-white"><i class="fa-solid fa-folder-open" aria-hidden="true"></i>Project Resources</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick access -->
+    <section class="border-b border-[#dde1e8]" aria-labelledby="quick-title">
+      <div class="mx-auto flex max-w-6xl flex-col gap-4 px-5 py-5 sm:px-8 md:flex-row md:items-center md:justify-between">
+        <h2 id="quick-title" class="text-sm font-semibold">Reviewing this project? Start with the key sections.</h2>
+        <ul class="flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium">
+          <li><a href="https://github.com/portfoliodevme/backup" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 underline underline-offset-4"><i class="fa-solid fa-code" aria-hidden="true"></i>Source code</a></li>
+          <li><a href="#overview" class="inline-flex items-center gap-2 underline underline-offset-4"><i class="fa-solid fa-circle-info" aria-hidden="true"></i>Overview</a></li>
+          <li><a href="#features" class="inline-flex items-center gap-2 underline underline-offset-4"><i class="fa-solid fa-list-check" aria-hidden="true"></i>Features</a></li>
+          <li><a href="#architecture" class="inline-flex items-center gap-2 underline underline-offset-4"><i class="fa-solid fa-sitemap" aria-hidden="true"></i>Architecture</a></li>
+          <li><a href="#setup" class="inline-flex items-center gap-2 underline underline-offset-4"><i class="fa-solid fa-terminal" aria-hidden="true"></i>Setup</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="mx-auto grid max-w-6xl gap-12 px-5 py-12 sm:px-8 lg:grid-cols-[13rem_1fr]">
+      <!-- In-page navigation -->
+      <aside class="lg:sticky lg:top-24 lg:self-start" aria-label="On this page">
+        <p class="text-sm font-semibold">On this page</p>
+        <ul class="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm text-[#475063] lg:flex-col lg:gap-y-2">
+          <li><a href="#overview" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Overview</a></li>
+          <li><a href="#problem" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Problem statement</a></li>
+          <li><a href="#features" class="underline-offset-4 hover:text-[#050b1a] hover:underline">What it does</a></li>
+          <li><a href="#stack" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Technology stack</a></li>
+          <li><a href="#architecture" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Architecture</a></li>
+          <li><a href="#workflow" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Backup workflow</a></li>
+          <li><a href="#recovery" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Recovery &amp; verification</a></li>
+          <li><a href="#data-model" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Data model</a></li>
+          <li><a href="#security" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Security</a></li>
+          <li><a href="#setup" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Running the project</a></li>
+          <li><a href="#scope" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Scope &amp; notes</a></li>
+          <li><a href="#resources" class="font-semibold underline-offset-4 hover:text-[#050b1a] hover:underline">Project resources</a></li>
+        </ul>
+      </aside>
+
+      <div class="min-w-0 space-y-16">
+
+        <!-- Overview -->
+        <section id="overview" aria-labelledby="overview-title">
+          <div class="flex flex-wrap items-center gap-3">
+            <h2 id="overview-title" class="font-display text-2xl font-bold">Project overview</h2>
+            <span class="tag tag-explain">Explanatory</span>
+          </div>
+          <div class="mt-4 max-w-3xl space-y-4 text-[#2b3447]">
+            <p>ODBRMS is a web-based backup and recovery management system for organisational data. It brings backup sources, storage destinations, schedules, restore jobs, integrity checks and audit records into one interface.</p>
+            <p>The system can protect two kinds of source: filesystem directories, which are stored as compressed ZIP archives, and MySQL/MariaDB databases, which are exported as SQL dumps and stored inside ZIP archives. Users can run backups manually or schedule them to run automatically.</p>
+            <p>The interface is served by Flask and uses HTML, CSS and JavaScript. The application stores its configuration and operational records in MySQL, while backup archives and restoration output are written to registered filesystem destinations.</p>
+          </div>
+          <aside class="mt-8 border-l-4 border-[#050b1a] bg-[#f4f5f7] p-6" aria-labelledby="note-title">
+            <h3 id="note-title" class="font-display text-lg font-semibold">Designed around trustworthy recovery</h3>
+            <p class="mt-2 max-w-3xl text-[#2b3447]">Every backup archive receives a SHA-256 checksum. Before restoring, the system re-verifies the archive and its incremental chain, validates archive paths, and refuses unsafe operations unless an administrator explicitly authorises them.</p>
+          </aside>
+        </section>
+
+        <!-- Problem -->
+        <section id="problem" aria-labelledby="problem-title">
+          <div class="flex flex-wrap items-center gap-3">
+            <h2 id="problem-title" class="font-display text-2xl font-bold">Problem statement</h2>
+            <span class="tag tag-explain">Explanatory</span>
+          </div>
+          <div class="mt-4 max-w-3xl space-y-4 text-[#2b3447]">
+            <p>Organisations keep important records in folders and databases. Without a planned backup process, data can be lost through accidental deletion, hardware failure, corruption or other incidents. Manual backups are also easy to forget and difficult to prove.</p>
+            <p>A useful system must do more than copy files. It needs to schedule work, record what happened, prove that stored archives are intact, restore data safely, avoid deleting the last valid recovery point, and show who performed each action.</p>
+            <p>ODBRMS was built to address those needs in a single, auditable application.</p>
+          </div>
+        </section>
+
+        <!-- Features -->
+        <section id="features" aria-labelledby="features-title">
+          <h2 id="features-title" class="font-display text-2xl font-bold">What the system does</h2>
+          <p class="mt-3 max-w-2xl text-[#475063]">The main capabilities implemented in the project.</p>
+          <ul class="mt-8 grid gap-x-8 gap-y-10 sm:grid-cols-2">
+            <li class="border-t-2 border-[#050b1a] pt-4">
+              <i class="fa-solid fa-box-archive text-xl" aria-hidden="true"></i>
+              <h3 class="font-display mt-3 text-lg font-semibold">File and database backups</h3>
+              <p class="mt-2 text-[#2b3447]">Back up directories as streaming ZIP archives and MySQL databases as validated SQL dumps.</p>
+            </li>
+            <li class="border-t-2 border-[#050b1a] pt-4">
+              <i class="fa-solid fa-layer-group text-xl" aria-hidden="true"></i>
+              <h3 class="font-display mt-3 text-lg font-semibold">Full and incremental backups</h3>
+              <p class="mt-2 text-[#2b3447]">Filesystem sources support incremental backups with a protected parent chain back to a full base backup.</p>
+            </li>
+            <li class="border-t-2 border-[#050b1a] pt-4">
+              <i class="fa-solid fa-calendar-days text-xl" aria-hidden="true"></i>
+              <h3 class="font-display mt-3 text-lg font-semibold">Scheduled protection</h3>
+              <p class="mt-2 text-[#2b3447]">Daily, weekly and monthly schedules run through APScheduler in a configured timezone.</p>
+            </li>
+            <li class="border-t-2 border-[#050b1a] pt-4">
+              <i class="fa-solid fa-hard-drive text-xl" aria-hidden="true"></i>
+              <h3 class="font-display mt-3 text-lg font-semibold">Storage management</h3>
+              <p class="mt-2 text-[#2b3447]">Register local, secondary, removable or network destinations and monitor capacity and online status.</p>
+            </li>
+            <li class="border-t-2 border-[#050b1a] pt-4">
+              <i class="fa-solid fa-shield-halved text-xl" aria-hidden="true"></i>
+              <h3 class="font-display mt-3 text-lg font-semibold">Integrity verification</h3>
+              <p class="mt-2 text-[#2b3447]">Recompute SHA-256 checksums to confirm that archives have not been corrupted or altered.</p>
+            </li>
+            <li class="border-t-2 border-[#050b1a] pt-4">
+              <i class="fa-solid fa-clock-rotate-left text-xl" aria-hidden="true"></i>
+              <h3 class="font-display mt-3 text-lg font-semibold">Safe recovery</h3>
+              <p class="mt-2 text-[#2b3447]">Restore files or databases into protected destinations with validation and explicit confirmation.</p>
+            </li>
+            <li class="border-t-2 border-[#050b1a] pt-4">
+              <i class="fa-solid fa-trash-can-arrow-up text-xl" aria-hidden="true"></i>
+              <h3 class="font-display mt-3 text-lg font-semibold">Retention rules</h3>
+              <p class="mt-2 text-[#2b3447]">Remove expired backups while protecting chains, active jobs, locked records and the newest recovery point.</p>
+            </li>
+            <li class="border-t-2 border-[#050b1a] pt-4">
+              <i class="fa-solid fa-user-shield text-xl" aria-hidden="true"></i>
+              <h3 class="font-display mt-3 text-lg font-semibold">Roles and audit trail</h3>
+              <p class="mt-2 text-[#2b3447]">Separate administrator, operator and viewer permissions while recording important actions.</p>
+            </li>
+            <li class="border-t-2 border-[#050b1a] pt-4">
+              <i class="fa-solid fa-chart-column text-xl" aria-hidden="true"></i>
+              <h3 class="font-display mt-3 text-lg font-semibold">Reports and analytics</h3>
+              <p class="mt-2 text-[#2b3447]">Review backup, storage, recovery and verification activity, with CSV export for selected reports.</p>
+            </li>
+          </ul>
+        </section>
+
+        <!-- Technology stack -->
+        <section id="stack" aria-labelledby="stack-title">
+          <h2 id="stack-title" class="font-display text-2xl font-bold">Technology stack</h2>
+          <p class="mt-3 max-w-2xl text-[#475063]">The tools used to build the backend, data layer and interface.</p>
+          <ul class="mt-6 grid grid-cols-2 gap-3 text-sm sm:grid-cols-3 lg:grid-cols-4">
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-brands fa-python w-5 text-center" aria-hidden="true"></i>Python</li>
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-flask w-5 text-center" aria-hidden="true"></i>Flask</li>
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-database w-5 text-center" aria-hidden="true"></i>MySQL</li>
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-diagram-project w-5 text-center" aria-hidden="true"></i>SQLAlchemy</li>
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-clock w-5 text-center" aria-hidden="true"></i>APScheduler</li>
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-brands fa-html5 w-5 text-center" aria-hidden="true"></i>HTML</li>
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-brands fa-css3-alt w-5 text-center" aria-hidden="true"></i>CSS</li>
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-brands fa-js w-5 text-center" aria-hidden="true"></i>JavaScript</li>
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-key w-5 text-center" aria-hidden="true"></i>Flask-Login</li>
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-code-branch w-5 text-center" aria-hidden="true"></i>Flask-Migrate</li>
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-lock w-5 text-center" aria-hidden="true"></i>Cryptography</li>
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-terminal w-5 text-center" aria-hidden="true"></i>mysqldump</li>
+          </ul>
+          <p class="mt-4 max-w-3xl text-sm text-[#475063]">The frontend is a static HTML, CSS and JavaScript interface served directly by Flask. There is no separate Node.js build or single-page application framework.</p>
+        </section>
+
+        <!-- Architecture -->
+        <section id="architecture" aria-labelledby="architecture-title">
+          <h2 id="architecture-title" class="font-display text-2xl font-bold">Architecture</h2>
+          <p class="mt-3 max-w-3xl text-[#2b3447]">The application follows an application-factory pattern with separate route, service and model layers. Operations that take time run in background threads, and scheduled backups are managed by APScheduler.</p>
+          <pre class="mt-6 overflow-x-auto rounded bg-[#050b1a] p-5 text-sm leading-7 text-white" aria-label="ODBRMS architecture diagram"><code>Browser (HTML, CSS, JavaScript)
+        |
+        |  JSON requests to /api/v1
+        v
+Flask application factory
+  +-- Routes / blueprints     Pages and JSON API
+  +-- Service layer           Backup, recovery, verification,
+  |                           storage, scheduling, retention,
+  |                           audit, settings, notifications
+  +-- Models                  SQLAlchemy ORM tables
+  +-- Background workers      Bounded thread pool
+  +-- Scheduler               APScheduler cron jobs
+        |
+        v
+MySQL database  +  Filesystem backup vaults / restore output</code></pre>
+          <div class="mt-6 grid gap-6 md:grid-cols-2">
+            <div class="border-t-2 border-[#050b1a] pt-4">
+              <h3 class="font-display text-lg font-semibold">Backend request flow</h3>
+              <p class="mt-2 text-[#2b3447]">A route validates the request and delegates the work to a service. Services update SQLAlchemy models and write audit records. Long-running work is submitted to a thread pool with its own Flask application context.</p>
+            </div>
+            <div class="border-t-2 border-[#050b1a] pt-4">
+              <h3 class="font-display text-lg font-semibold">Frontend request flow</h3>
+              <p class="mt-2 text-[#2b3447]">Each page is a standalone HTML document. Shared JavaScript handles authentication, CSRF tokens, navigation, API calls, formatting and progress polling.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Workflow -->
+        <section id="workflow" aria-labelledby="workflow-title">
+          <div class="flex flex-wrap items-center gap-3">
+            <h2 id="workflow-title" class="font-display text-2xl font-bold">How a backup works</h2>
+            <span class="tag tag-explain">Explanatory</span>
+          </div>
+          <ol class="mt-8 border-l-2 border-[#050b1a]">
+            <li class="relative pb-7 pl-8"><span class="absolute -left-[0.8rem] top-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#050b1a] text-xs font-semibold text-white" aria-hidden="true">1</span><h3 class="font-semibold">Request and validate</h3><p class="mt-1 max-w-2xl text-[#2b3447]">An operator selects a source, destination and backup type. The system checks permissions, source state, storage availability and whether another backup is already running.</p></li>
+            <li class="relative pb-7 pl-8"><span class="absolute -left-[0.8rem] top-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#050b1a] text-xs font-semibold text-white" aria-hidden="true">2</span><h3 class="font-semibold">Queue the operation</h3><p class="mt-1 max-w-2xl text-[#2b3447]">A backup record is created with a pending status and submitted to the background worker pool so the interface remains responsive.</p></li>
+            <li class="relative pb-7 pl-8"><span class="absolute -left-[0.8rem] top-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#050b1a] text-xs font-semibold text-white" aria-hidden="true">3</span><h3 class="font-semibold">Collect the data</h3><p class="mt-1 max-w-2xl text-[#2b3447]">For files, the engine enumerates regular files without following symbolic links. For databases, it runs a consistent MySQL dump using a temporary credentials file.</p></li>
+            <li class="relative pb-7 pl-8"><span class="absolute -left-[0.8rem] top-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#050b1a] text-xs font-semibold text-white" aria-hidden="true">4</span><h3 class="font-semibold">Build the archive</h3><p class="mt-1 max-w-2xl text-[#2b3447]">Data is streamed into a ZIP archive in chunks. A manifest records the source, backup type, file details and per-file SHA-256 hashes.</p></li>
+            <li class="relative pb-7 pl-8"><span class="absolute -left-[0.8rem] top-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#050b1a] text-xs font-semibold text-white" aria-hidden="true">5</span><h3 class="font-semibold">Finalise safely</h3><p class="mt-1 max-w-2xl text-[#2b3447]">The finished archive is hashed, moved into place atomically, recorded in the database and written alongside a manifest file. Failures clean up partial archives and are logged.</p></li>
+            <li class="relative pl-8"><span class="absolute -left-[0.8rem] top-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#050b1a] text-xs font-semibold text-white" aria-hidden="true">6</span><h3 class="font-semibold">Optionally verify</h3><p class="mt-1 max-w-2xl text-[#2b3447]">If automatic verification is enabled, the system immediately queues a checksum check. Retention can also run after a scheduled backup completes.</p></li>
+          </ol>
+          <p class="mt-4 max-w-3xl text-sm text-[#475063]">Filesystem incremental backups compare each file's size and modification time against the cumulative chain index. Database backups are always full, so a database archive is never mislabelled as incremental.</p>
+        </section>
+
+        <!-- Recovery and verification -->
+        <section id="recovery" aria-labelledby="recovery-title">
+          <div class="flex flex-wrap items-center gap-3">
+            <h2 id="recovery-title" class="font-display text-2xl font-bold">Recovery and verification</h2>
+            <span class="tag tag-explain">Explanatory</span>
+          </div>
+          <div class="mt-4 max-w-3xl space-y-4 text-[#2b3447]">
+            <p>Recovery is treated as a controlled operation rather than a simple file copy. The system checks the selected backup, verifies every archive in the chain, validates every archive entry, and only then writes restored data.</p>
+          </div>
+          <dl class="mt-6 divide-y divide-[#dde1e8] border-y border-[#dde1e8]">
+            <div class="grid gap-2 py-5 md:grid-cols-[14rem_1fr] md:gap-8"><dt class="font-display text-lg font-semibold">Checksum before restore</dt><dd class="max-w-3xl text-[#2b3447]">Each archive is re-hashed and compared with the checksum recorded at backup time. A mismatch aborts the operation before any data is written.</dd></div>
+            <div class="grid gap-2 py-5 md:grid-cols-[14rem_1fr] md:gap-8"><dt class="font-display text-lg font-semibold">Chain integrity</dt><dd class="max-w-3xl text-[#2b3447]">An incremental backup cannot be restored without its full parent chain. The full chain is verified first.</dd></div>
+            <div class="grid gap-2 py-5 md:grid-cols-[14rem_1fr] md:gap-8"><dt class="font-display text-lg font-semibold">Archive path safety</dt><dd class="max-w-3xl text-[#2b3447]">Entries are rejected if they contain absolute paths, parent-directory traversal, unsafe Windows path forms or symbolic links.</dd></div>
+            <div class="grid gap-2 py-5 md:grid-cols-[14rem_1fr] md:gap-8"><dt class="font-display text-lg font-semibold">Atomic file writes</dt><dd class="max-w-3xl text-[#2b3447]">Restored files are written to temporary names and moved into place, reducing the risk of leaving partially written files.</dd></div>
+            <div class="grid gap-2 py-5 md:grid-cols-[14rem_1fr] md:gap-8"><dt class="font-display text-lg font-semibold">Safe database targets</dt><dd class="max-w-3xl text-[#2b3447]">Database restores use validated target names. By default they go into a test database prefixed <code class="bg-[#f4f5f7] px-1.5 py-0.5 text-sm">odbrms_restore_</code>; overwriting a production database requires explicit administrator authorisation.</dd></div>
+            <div class="grid gap-2 py-5 md:grid-cols-[14rem_1fr] md:gap-8"><dt class="font-display text-lg font-semibold">SQL dump validation</dt><dd class="max-w-3xl text-[#2b3447]">Dumps are rejected if they contain database-level statements such as <code class="bg-[#f4f5f7] px-1.5 py-0.5 text-sm">DROP DATABASE</code> or <code class="bg-[#f4f5f7] px-1.5 py-0.5 text-sm">USE</code>. After import, the table count is compared with the manifest.</dd></div>
+          </dl>
+        </section>
+
+        <!-- Data model -->
+        <section id="data-model" aria-labelledby="data-model-title">
+          <h2 id="data-model-title" class="font-display text-2xl font-bold">Data model</h2>
+          <p class="mt-3 max-w-3xl text-[#2b3447]">The main MySQL tables represent the configuration, operations and audit history of the system.</p>
+          <div class="mt-6 overflow-x-auto border border-[#dde1e8]">
+            <table class="w-full min-w-[36rem] text-left text-sm">
+              <caption class="sr-only">Main ODBRMS database tables</caption>
+              <thead class="bg-[#f4f5f7]">
+                <tr>
+                  <th scope="col" class="px-4 py-3 font-semibold">Table</th>
+                  <th scope="col" class="px-4 py-3 font-semibold">Purpose</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-[#dde1e8]">
+                <tr><th scope="row" class="px-4 py-3 font-semibold">users</th><td class="px-4 py-3">Accounts, password hashes, roles and login lockout fields.</td></tr>
+                <tr><th scope="row" class="px-4 py-3 font-semibold">backup_sources</th><td class="px-4 py-3">Filesystem directories and database connection details.</td></tr>
+                <tr><th scope="row" class="px-4 py-3 font-semibold">storage_destinations</th><td class="px-4 py-3">Registered backup storage paths, capacity and status.</td></tr>
+                <tr><th scope="row" class="px-4 py-3 font-semibold">backups</th><td class="px-4 py-3">Each backup operation, archive path, checksum, status and progress.</td></tr>
+                <tr><th scope="row" class="px-4 py-3 font-semibold">backup_files</th><td class="px-4 py-3">Per-file manifest index for filesystem backups.</td></tr>
+                <tr><th scope="row" class="px-4 py-3 font-semibold">backup_schedules</th><td class="px-4 py-3">Automatic backup schedules and their next run times.</td></tr>
+                <tr><th scope="row" class="px-4 py-3 font-semibold">restore_jobs</th><td class="px-4 py-3">Restoration attempts, progress, results and errors.</td></tr>
+                <tr><th scope="row" class="px-4 py-3 font-semibold">verification_records</th><td class="px-4 py-3">Expected and actual checksums for integrity checks.</td></tr>
+                <tr><th scope="row" class="px-4 py-3 font-semibold">activity_logs</th><td class="px-4 py-3">Audit trail of user and system actions.</td></tr>
+                <tr><th scope="row" class="px-4 py-3 font-semibold">settings</th><td class="px-4 py-3">Runtime settings such as retention, timezone and notifications.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Security -->
+        <section id="security" aria-labelledby="security-title">
+          <h2 id="security-title" class="font-display text-2xl font-bold">Security and reliability</h2>
+          <p class="mt-3 max-w-3xl text-[#2b3447]">The project applies controls at several levels so that backup and recovery operations are both protected and auditable.</p>
+          <ul class="mt-4 max-w-3xl list-disc space-y-2 pl-5 text-[#2b3447]">
+            <li>Session authentication with Flask-Login and hashed passwords.</li>
+            <li>Role-based access for administrators, operators and viewers.</li>
+            <li>Lockout after repeated failed sign-in attempts.</li>
+            <li>CSRF protection for state-changing API requests.</li>
+            <li>Security headers and no-store caching for API responses.</li>
+            <li>Configured allowlists for source, restore and destination paths.</li>
+            <li>Database passwords encrypted at rest with Fernet; credentials are not passed on command lines.</li>
+            <li>SHA-256 checksums for archives and per-file hashes in the manifest.</li>
+            <li>Atomic archive creation and temporary-file restoration.</li>
+            <li>Interrupted jobs are marked failed on restart instead of being reported as successful.</li>
+            <li>Retention protects the newest recovery point, active chains and records in use.</li>
+            <li>Every important action is written to the activity log with user, IP address and timestamp.</li>
+          </ul>
+        </section>
+
+        <!-- Setup -->
+        <section id="setup" aria-labelledby="setup-title">
+          <h2 id="setup-title" class="font-display text-2xl font-bold">Running the project</h2>
+          <p class="mt-3 max-w-3xl text-[#2b3447]">ODBRMS is a Python application. It needs Python, MySQL or MariaDB, and the MySQL client tools used for database dump and restore.</p>
+          <ol class="mt-8 border-l-2 border-[#050b1a]">
+            <li class="relative pb-7 pl-8"><span class="absolute -left-[0.8rem] top-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#050b1a] text-xs font-semibold text-white" aria-hidden="true">1</span><h3 class="font-semibold">Clone the repository</h3><p class="mt-1 max-w-2xl text-[#2b3447]">Download the project from GitHub and open a terminal in the project folder.</p><pre class="mt-2 overflow-x-auto rounded bg-[#f4f5f7] p-4 text-sm"><code>git clone https://github.com/portfoliodevme/backup.git
+cd backup</code></pre></li>
+            <li class="relative pb-7 pl-8"><span class="absolute -left-[0.8rem] top-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#050b1a] text-xs font-semibold text-white" aria-hidden="true">2</span><h3 class="font-semibold">Create a virtual environment</h3><p class="mt-1 max-w-2xl text-[#2b3447]">Install the Python dependencies from the requirements file.</p><pre class="mt-2 overflow-x-auto rounded bg-[#f4f5f7] p-4 text-sm"><code>python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt</code></pre></li>
+            <li class="relative pb-7 pl-8"><span class="absolute -left-[0.8rem] top-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#050b1a] text-xs font-semibold text-white" aria-hidden="true">3</span><h3 class="font-semibold">Configure the environment</h3><p class="mt-1 max-w-2xl text-[#2b3447]">Copy <code class="bg-[#f4f5f7] px-1.5 py-0.5 text-sm">.env.example</code> to <code class="bg-[#f4f5f7] px-1.5 py-0.5 text-sm">.env</code> and set the database URL, secret key, backup paths, allowed roots and MySQL tool paths.</p></li>
+            <li class="relative pb-7 pl-8"><span class="absolute -left-[0.8rem] top-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#050b1a] text-xs font-semibold text-white" aria-hidden="true">4</span><h3 class="font-semibold">Prepare the database</h3><p class="mt-1 max-w-2xl text-[#2b3447]">Create the MySQL database and apply the schema using migrations, or use the initialisation command on a fresh setup.</p><pre class="mt-2 overflow-x-auto rounded bg-[#f4f5f7] p-4 text-sm"><code>set FLASK_APP=run.py
+flask db upgrade
+
+# Alternative for a fresh database:
+flask init-db</code></pre></li>
+            <li class="relative pb-7 pl-8"><span class="absolute -left-[0.8rem] top-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#050b1a] text-xs font-semibold text-white" aria-hidden="true">5</span><h3 class="font-semibold">Create an administrator</h3><p class="mt-1 max-w-2xl text-[#2b3447]">Use the built-in CLI command to create the first administrator account.</p><pre class="mt-2 overflow-x-auto rounded bg-[#f4f5f7] p-4 text-sm"><code>flask create-admin</code></pre></li>
+            <li class="relative pb-7 pl-8"><span class="absolute -left-[0.8rem] top-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#050b1a] text-xs font-semibold text-white" aria-hidden="true">6</span><h3 class="font-semibold">Start the application</h3><p class="mt-1 max-w-2xl text-[#2b3447]">Run the Flask entry point. The scheduler starts with the application by default.</p><pre class="mt-2 overflow-x-auto rounded bg-[#f4f5f7] p-4 text-sm"><code>python run.py</code></pre></li>
+            <li class="relative pl-8"><span class="absolute -left-[0.8rem] top-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#050b1a] text-xs font-semibold text-white" aria-hidden="true">7</span><h3 class="font-semibold">Check the tools</h3><p class="mt-1 max-w-2xl text-[#2b3447]">Confirm that <code class="bg-[#f4f5f7] px-1.5 py-0.5 text-sm">mysqldump</code> and <code class="bg-[#f4f5f7] px-1.5 py-0.5 text-sm">mysql</code> are available at the configured paths.</p><pre class="mt-2 overflow-x-auto rounded bg-[#f4f5f7] p-4 text-sm"><code>flask check-tools</code></pre></li>
+          </ol>
+          <p class="mt-4 max-w-3xl text-sm text-[#475063]">The full setup, configuration and API details are documented in the repository's <code class="bg-[#f4f5f7] px-1.5 py-0.5 text-sm">PROJECT_OVERVIEW.txt</code> file and in the application configuration.</p>
+        </section>
+
+        <!-- Scope -->
+        <section id="scope" aria-labelledby="scope-title">
+          <h2 id="scope-title" class="font-display text-2xl font-bold">Scope and project notes</h2>
+          <ul class="mt-4 max-w-3xl list-disc space-y-2 pl-5 text-[#2b3447]">
+            <li>Incremental backups are supported for filesystem sources only; database backups are always full SQL dumps.</li>
+            <li>The default configuration is Windows/XAMPP-oriented, but the application is a cross-platform Flask project.</li>
+            <li>Background work uses an in-process thread pool rather than a separate distributed queue, so worker capacity should be planned for the deployment.</li>
+            <li>Only one scheduler process should run against a database to avoid duplicate automatic backups.</li>
+            <li>Restores are constrained to configured allowlist roots and safe database target names.</li>
+            <li>The project is intended for organisational backup management and academic demonstration, not as a replacement for a full enterprise backup platform.</li>
+          </ul>
+        </section>
+      </div>
+    </div>
+
+    <!-- Project resources -->
+    <section id="resources" class="border-t border-[#dde1e8] bg-[#f4f5f7]" aria-labelledby="resources-title">
+      <div class="mx-auto max-w-6xl px-5 py-16 sm:px-8">
+        <h2 id="resources-title" class="font-display text-3xl font-bold">Project Resources</h2>
+        <p class="mt-3 max-w-2xl text-[#475063]">The source code and documentation are available in the GitHub repository.</p>
+        <ul class="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <li class="flex flex-col p-7 transition border border-[#dde1e8] bg-white hover:border-[#050b1a]">
+            <span class="flex h-12 w-12 items-center justify-center rounded bg-[#050b1a] text-white"><i class="fa-solid fa-code text-xl" aria-hidden="true"></i></span>
+            <h3 class="font-display mt-5 text-xl font-semibold">Source Code</h3>
+            <p class="mt-2 text-[#2b3447]">Browse the complete Flask application, models, services, routes and frontend files.</p>
+            <div class="mt-auto pt-6"><a href="https://github.com/portfoliodevme/backup" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 rounded px-6 py-3 text-sm font-semibold transition bg-[#050b1a] text-white hover:bg-[#16213d]"><i class="fa-solid fa-arrow-up-right-from-square text-xs" aria-hidden="true"></i>View Source Code</a></div>
+          </li>
+          <li class="flex flex-col p-7 transition border border-[#dde1e8] bg-white hover:border-[#050b1a]">
+            <span class="flex h-12 w-12 items-center justify-center rounded bg-[#050b1a] text-white"><i class="fa-solid fa-book text-xl" aria-hidden="true"></i></span>
+            <h3 class="font-display mt-5 text-xl font-semibold">Documentation</h3>
+            <p class="mt-2 text-[#2b3447]">Read the project overview, configuration notes, API reference and setup instructions.</p>
+            <div class="mt-auto pt-6"><a href="https://github.com/portfoliodevme/backup" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 rounded px-6 py-3 text-sm font-semibold transition bg-[#050b1a] text-white hover:bg-[#16213d]"><i class="fa-solid fa-arrow-up-right-from-square text-xs" aria-hidden="true"></i>Open Documentation</a></div>
+          </li>
+          <li class="flex flex-col p-7 transition on-dark border border-[#050b1a] bg-[#050b1a] text-white">
+            <span class="flex h-12 w-12 items-center justify-center rounded bg-white text-[#050b1a]"><i class="fa-brands fa-github text-xl" aria-hidden="true"></i></span>
+            <h3 class="font-display mt-5 text-xl font-semibold">GitHub Repository</h3>
+            <p class="mt-2 text-[#d6dcea]">Open the complete project repository and follow the commit history.</p>
+            <div class="mt-auto pt-6"><a href="https://github.com/portfoliodevme/backup" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 rounded px-6 py-3 text-sm font-semibold transition bg-white text-[#050b1a] hover:bg-[#e6e9f0]"><i class="fa-solid fa-arrow-up-right-from-square text-xs" aria-hidden="true"></i>Open Repository</a></div>
+          </li>
+        </ul>
+
+        <div class="mt-14 grid gap-10 lg:grid-cols-[1fr_1.2fr]">
+          <div>
+            <h3 class="font-display text-xl font-semibold">The repository contains</h3>
+            <ul class="mt-4 grid gap-x-6 gap-y-2 text-sm text-[#2b3447] sm:grid-cols-2">
+              <li><i class="fa-solid fa-check mr-2 text-[#475063]" aria-hidden="true"></i>Flask application factory</li>
+              <li><i class="fa-solid fa-check mr-2 text-[#475063]" aria-hidden="true"></i>SQLAlchemy models</li>
+              <li><i class="fa-solid fa-check mr-2 text-[#475063]" aria-hidden="true"></i>Backup and recovery services</li>
+              <li><i class="fa-solid fa-check mr-2 text-[#475063]" aria-hidden="true"></i>APScheduler integration</li>
+              <li><i class="fa-solid fa-check mr-2 text-[#475063]" aria-hidden="true"></i>HTML, CSS and JavaScript frontend</li>
+              <li><i class="fa-solid fa-check mr-2 text-[#475063]" aria-hidden="true"></i>Database migrations</li>
+              <li><i class="fa-solid fa-check mr-2 text-[#475063]" aria-hidden="true"></i>Demo data seeder</li>
+              <li><i class="fa-solid fa-check mr-2 text-[#475063]" aria-hidden="true"></i>Full project overview</li>
+              <li><i class="fa-solid fa-check mr-2 text-[#475063]" aria-hidden="true"></i>Requirements and dependencies</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-display text-xl font-semibold">Project type</h3>
+            <p class="mt-2 text-sm text-[#475063]">A systems development and web application project combining backend engineering, database design, security controls and a browser-based management interface.</p>
+            <dl class="mt-4 divide-y divide-[#dde1e8] border-y border-[#dde1e8] text-sm">
+              <div class="grid gap-1 py-3 md:grid-cols-[10rem_1fr] md:gap-6"><dt class="font-semibold">Application</dt><dd>Web-based backup and recovery management</dd></div>
+              <div class="grid gap-1 py-3 md:grid-cols-[10rem_1fr] md:gap-6"><dt class="font-semibold">Source types</dt><dd>Filesystem directories and MySQL databases</dd></div>
+              <div class="grid gap-1 py-3 md:grid-cols-[10rem_1fr] md:gap-6"><dt class="font-semibold">Key concern</dt><dd>Integrity, safe restoration and auditability</dd></div>
+              <div class="grid gap-1 py-3 md:grid-cols-[10rem_1fr] md:gap-6"><dt class="font-semibold">Repository</dt><dd><a href="https://github.com/portfoliodevme/backup" target="_blank" rel="noopener noreferrer" class="font-semibold underline underline-offset-4">github.com/portfoliodevme/backup</a></dd></div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Back to portfolio -->
+    <section class="on-dark bg-[#050b1a] text-white" aria-labelledby="back-title">
+      <div class="mx-auto flex max-w-6xl flex-col gap-6 px-5 py-12 sm:px-8 md:flex-row md:items-center md:justify-between">
+        <div>
+          <h2 id="back-title" class="font-display text-2xl font-bold">More from Edwin Msilimba</h2>
+          <p class="mt-2 max-w-xl text-[#b7c0d1]">See the other projects and the skills behind this work.</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a href="projects.html" class="rounded bg-white px-6 py-3 text-sm font-semibold text-[#050b1a] transition hover:bg-[#e6e9f0]">All Projects</a>
+          <a href="index.html" class="rounded border border-white px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#16213d]">About Edwin</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="on-dark bg-[#050b1a] text-white">
+    <div class="mx-auto max-w-6xl px-5 py-12 sm:px-8">
+      <div class="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
+        <div>
+          <p class="font-display text-lg font-semibold">Edwin Msilimba</p>
+          <p class="mt-3 text-sm text-[#b7c0d1]">BSc Computer Science<br>DMI University</p>
+        </div>
+        <ul class="space-y-3 text-sm" aria-label="Footer pages">
+          <li><a href="index.html" class="underline-offset-4 hover:underline">Home</a></li>
+          <li><a href="projects.html" class="underline-offset-4 hover:underline">Projects</a></li>
+          <li><a href="project.html" class="underline-offset-4 hover:underline">Featured Project</a></li>
+          <li><a href="odbrms.html" class="underline-offset-4 hover:underline">ODBRMS Project</a></li>
+        </ul>
+        <ul class="space-y-3 text-sm" aria-label="Contact links">
+          <li><a href="https://github.com/Edoh478/" target="_blank" rel="noopener noreferrer" class="underline-offset-4 hover:underline"><i class="fa-brands fa-github mr-2" aria-hidden="true"></i>GitHub</a></li>
+          <li><a href="#" data-link="EMAIL_ADDRESS" class="underline-offset-4 hover:underline"><i class="fa-solid fa-envelope mr-2" aria-hidden="true"></i>Email</a></li>
+          <li><a href="#" data-link="LINKEDIN_URL" class="underline-offset-4 hover:underline"><i class="fa-brands fa-linkedin mr-2" aria-hidden="true"></i>LinkedIn</a></li>
+        </ul>
+      </div>
+      <p class="mt-10 border-t border-[#1d2742] pt-6 text-xs text-[#b7c0d1]">&copy; 2026 Edwin Msilimba</p>
+    </div>
+  </footer>
+</body>
+</html>
