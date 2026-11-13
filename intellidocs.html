@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IntelliDocs: AI Document Classification &amp; Review | Edwin Msilimba</title>
+  <meta name="description" content="IntelliDocs by Edwin Msilimba: a Flask and MySQL document management system with automatic text extraction, TF-IDF plus calibrated SVM classification, human review of low-confidence predictions, analytics and a full audit trail.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="IntelliDocs: AI Document Classification &amp; Review | Edwin Msilimba">
+  <meta property="og:description" content="A Flask and MySQL web application that extracts text from uploaded documents, classifies them with a calibrated TF-IDF and SVM model, routes uncertain predictions to human reviewers, and keeps an auditable history of every decision.">
+  <meta property="og:site_name" content="Edwin Msilimba">
+  <meta name="twitter:card" content="summary">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <!-- Tailwind CSS via CDN, intentionally used with no custom configuration (works on GitHub Pages) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="assets/js/main.js" defer></script>
+</head>
+<body class="bg-white text-[#050b1a] antialiased">
+  <a href="#main" class="skip-link">Skip to main content</a>
+  <header class="sticky top-0 z-50 border-b border-[#dde1e8] bg-white">
+    <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
+      <a href="index.html" class="font-display text-base font-semibold text-[#050b1a]">Edwin Msilimba</a>
+      <nav aria-label="Primary" class="hidden items-center gap-7 lg:flex">
+        <a href="index.html" class="flex h-16 items-center border-b-2 px-1 text-sm border-transparent text-[#475063] hover:text-[#050b1a]">Home</a><a href="index.html#about" class="flex h-16 items-center border-b-2 px-1 text-sm border-transparent text-[#475063] hover:text-[#050b1a]">About</a><a href="projects.html" class="flex h-16 items-center border-b-2 px-1 text-sm border-transparent text-[#475063] hover:text-[#050b1a]">Projects</a><a href="project.html" class="flex h-16 items-center border-b-2 px-1 text-sm border-transparent text-[#475063] hover:text-[#050b1a]">Featured Project</a><a href="odbrms.html" class="flex h-16 items-center border-b-2 px-1 text-sm border-transparent text-[#475063] hover:text-[#050b1a]">ODBRMS</a><a href="intellidocs.html" class="flex h-16 items-center border-b-2 px-1 text-sm border-[#050b1a] font-semibold text-[#050b1a]" aria-current="page">IntelliDocs</a><a href="https://github.com/Edoh478/" target="_blank" rel="noopener noreferrer" class="flex h-16 items-center gap-2 border-b-2 border-transparent px-1 text-sm text-[#475063] hover:text-[#050b1a]"><i class="fa-brands fa-github" aria-hidden="true"></i>GitHub</a><a href="index.html#contact" class="flex h-16 items-center border-b-2 border-transparent px-1 text-sm text-[#475063] hover:text-[#050b1a]">Contact</a>
+      </nav>
+      <button id="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-menu"
+        class="flex h-10 w-10 items-center justify-center rounded border border-[#dde1e8] text-[#050b1a] lg:hidden">
+        <i class="fa-solid fa-bars" aria-hidden="true"></i>
+        <span class="sr-only">Toggle navigation menu</span>
+      </button>
+    </div>
+    <nav id="mobile-menu" aria-label="Mobile" class="hidden border-t border-[#dde1e8] bg-white lg:hidden">
+      <a href="index.html" class="block border-l-4 px-4 py-3 text-sm border-transparent text-[#475063]">Home</a><a href="index.html#about" class="block border-l-4 px-4 py-3 text-sm border-transparent text-[#475063]">About</a><a href="projects.html" class="block border-l-4 px-4 py-3 text-sm border-transparent text-[#475063]">Projects</a><a href="project.html" class="block border-l-4 px-4 py-3 text-sm border-transparent text-[#475063]">Featured Project</a><a href="odbrms.html" class="block border-l-4 px-4 py-3 text-sm border-transparent text-[#475063]">ODBRMS</a><a href="intellidocs.html" class="block border-l-4 px-4 py-3 text-sm border-[#050b1a] bg-[#f4f5f7] font-semibold" aria-current="page">IntelliDocs</a><a href="https://github.com/Edoh478/" target="_blank" rel="noopener noreferrer" class="block border-l-4 border-transparent px-4 py-3 text-sm text-[#475063]"><i class="fa-brands fa-github mr-2" aria-hidden="true"></i>GitHub</a><a href="index.html#contact" class="block border-l-4 border-transparent px-4 py-3 text-sm text-[#475063]">Contact</a>
+    </nav>
+  </header>
+
+  <noscript>
+    <p class="bg-[#fff8e8] px-5 py-3 text-sm">All project information is on this page. Use the GitHub repository link for the source code.</p>
+  </noscript>
+
+  <main id="main">
+    <!-- Page title -->
+    <section class="border-b border-[#dde1e8] bg-[#f4f5f7]" aria-labelledby="page-title">
+      <div class="mx-auto max-w-6xl px-5 py-12 sm:px-8">
+        <p class="text-sm font-semibold text-[#475063]">Systems Project &middot; Web Development &middot; Machine Learning</p>
+        <h1 id="page-title" class="font-display mt-2 max-w-4xl text-3xl font-bold leading-tight sm:text-4xl">IntelliDocs: AI Document Classification and Review System</h1>
+        <p class="mt-5 max-w-3xl text-lg text-[#2b3447]">A full-stack Flask and MySQL web application that reads uploaded documents, classifies them automatically, sends uncertain results to a human reviewer, and keeps a complete audit trail of every decision.</p>
+        <dl class="mt-8 grid max-w-3xl gap-6 text-sm sm:grid-cols-3">
+          <div><dt class="text-[#475063]">Developer</dt><dd class="mt-1 font-semibold">Edwin Msilimba</dd></div>
+          <div><dt class="text-[#475063]">Programme</dt><dd class="mt-1 font-semibold">BSc Computer Science</dd></div>
+          <div><dt class="text-[#475063]">Institution</dt><dd class="mt-1 font-semibold">DMI University</dd></div>
+        </dl>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="https://github.com/portfoliodevme/document" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded bg-[#050b1a] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#16213d]"><i class="fa-brands fa-github" aria-hidden="true"></i>GitHub Repository</a>
+          <a href="#resources" class="inline-flex items-center gap-2 rounded border border-[#050b1a] px-6 py-3 text-sm font-semibold text-[#050b1a] transition hover:bg-white"><i class="fa-solid fa-folder-open" aria-hidden="true"></i>Project Resources</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick access -->
+    <section class="border-b border-[#dde1e8]" aria-labelledby="quick-title">
+      <div class="mx-auto flex max-w-6xl flex-col gap-4 px-5 py-5 sm:px-8 md:flex-row md:items-center md:justify-between">
+        <h2 id="quick-title" class="text-sm font-semibold">Reviewing this project? Start with the key sections.</h2>
+        <ul class="flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium">
+          <li><a href="https://github.com/portfoliodevme/document" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 underline underline-offset-4"><i class="fa-solid fa-code" aria-hidden="true"></i>Source code</a></li>
+          <li><a href="#overview" class="inline-flex items-center gap-2 underline underline-offset-4"><i class="fa-solid fa-circle-info" aria-hidden="true"></i>Overview</a></li>
+          <li><a href="#features" class="inline-flex items-center gap-2 underline underline-offset-4"><i class="fa-solid fa-list-check" aria-hidden="true"></i>Features</a></li>
+          <li><a href="#pipeline" class="inline-flex items-center gap-2 underline underline-offset-4"><i class="fa-solid fa-brain" aria-hidden="true"></i>Classification</a></li>
+          <li><a href="#setup" class="inline-flex items-center gap-2 underline underline-offset-4"><i class="fa-solid fa-terminal" aria-hidden="true"></i>Setup</a></li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="mx-auto grid max-w-6xl gap-12 px-5 py-12 sm:px-8 lg:grid-cols-[13rem_1fr]">
+      <!-- In-page navigation -->
+      <aside class="lg:sticky lg:top-24 lg:self-start" aria-label="On this page">
+        <p class="text-sm font-semibold">On this page</p>
+        <ul class="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm text-[#475063] lg:flex-col lg:gap-y-2">
+          <li><a href="#overview" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Overview</a></li>
+          <li><a href="#problem" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Problem statement</a></li>
+          <li><a href="#features" class="underline-offset-4 hover:text-[#050b1a] hover:underline">What it does</a></li>
+          <li><a href="#stack" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Technology stack</a></li>
+          <li><a href="#architecture" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Architecture</a></li>
+          <li><a href="#pipeline" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Classification pipeline</a></li>
+          <li><a href="#review" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Human review loop</a></li>
+          <li><a href="#extraction" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Text extraction</a></li>
+          <li><a href="#data-model" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Data model</a></li>
+          <li><a href="#security" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Security</a></li>
+          <li><a href="#testing" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Testing</a></li>
+          <li><a href="#setup" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Running the project</a></li>
+          <li><a href="#scope" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Scope &amp; notes</a></li>
+          <li><a href="#resources" class="font-semibold underline-offset-4 hover:text-[#050b1a] hover:underline">Project resources</a></li>
+        </ul>
+      </aside>
+
+      <div class="min-w-0 space-y-16">
+
+        <!-- Overview -->
+        <section id="overview" aria-labelledby="overview-title">
+          <div class="flex flex-wrap items-center gap-3">
+            <h2 id="overview-title" class="font-display text-2xl font-bold">Project overview</h2>
+            <span class="tag tag-explain">Explanatory</span>
+          </div>
+          <div class="mt-4 max-w-3xl space-y-4 text-[#2b3447]">
+            <p>IntelliDocs is a web application for organisations that receive large volumes of mixed paperwork. A person uploads a document, and the system reads it, decides which category it belongs to, and files it automatically when it is confident enough to do so.</p>
+            <p>When the model is not confident, the document is not silently filed. It is routed to a review queue where a reviewer reads the extracted text, sees the model's probabilities, and either confirms the suggestion or assigns the correct category. Every decision is recorded.</p>
+            <p>The application is served by Flask and uses server-rendered HTML templates with vanilla JavaScript on the front end. Configuration, documents, classifications, corrections and audit history live in MySQL, while the uploaded files and the trained model are stored on disk.</p>
+          </div>
+          <aside class="mt-8 border-l-4 border-[#050b1a] bg-[#f4f5f7] p-6" aria-labelledby="note-title">
+            <h3 id="note-title" class="font-display text-lg font-semibold">The model assists, a person decides</h3>
+            <p class="mt-2 max-w-3xl text-[#2b3447]">IntelliDocs does not treat a prediction as a verdict. A human reviewer remains accountable for the final category, corrections are captured as verified training data, and the production model is never retrained automatically behind the reviewer's back.</p>
+          </aside>
+        </section>
+
+        <!-- Problem -->
+        <section id="problem" aria-labelledby="problem-title">
+          <div class="flex flex-wrap items-center gap-3">
+            <h2 id="problem-title" class="font-display text-2xl font-bold">Problem statement</h2>
+            <span class="tag tag-explain">Explanatory</span>
+          </div>
+          <div class="mt-4 max-w-3xl space-y-4 text-[#2b3447]">
+            <p>Organisations receive documents in many formats: scanned PDFs, Word files, plain text and photographs. Filing them by hand is slow, and doing it inconsistently makes searching, reporting and auditing difficult.</p>
+            <p>Automation alone is not the answer either. A classifier that confidently misfiles a legal contract as a payslip is worse than no classifier, and a system that cannot explain why a document was categorised cannot be trusted or audited.</p>
+            <p>A useful system therefore needs three things at once: reliable text extraction, a classification model that reports how confident it is, and a human review path for the cases the model is unsure about. IntelliDocs was built around that combination.</p>
+          </div>
+        </section>
+
+        <!-- Features -->
+        <section id="features" aria-labelledby="features-title">
+          <h2 id="features-title" class="font-display text-2xl font-bold">What the system does</h2>
+          <p class="mt-3 max-w-2xl text-[#475063]">The main capabilities implemented in the project.</p>
+          <ul class="mt-8 grid gap-x-8 gap-y-10 sm:grid-cols-2">
+            <li class="border-t-2 border-[#050b1a] pt-4">
+              <i class="fa-solid fa-cloud-arrow-up text-xl" aria-hidden="true"></i>
+              <h3 class="font-display mt-3 text-lg font-semibold">Multi-format upload</h3>
+              <p class="mt-2 text-[#2b3447]">Accepts PDF, DOCX, TXT, PNG and JPEG files through a drag-and-drop queue with per-file progress, size checks and duplicate detection by SHA-256 hash.</p>
+            </li>
+            <li class="border-t-2 border-[#050b1a] pt-4">
+              <i class="fa-solid fa-file-lines text-xl" aria-hidden="true"></i>
+              <h3 class="font-display mt-3 text-lg font-semibold">Text extraction with OCR</h3>
+              <p class="mt-2 text-[#2b3447]">Reads embedded PDF text, Word paragraphs and tables, and plain text files. Scanned pages and images fall back to Tesseract OCR so they are not discarded.</p>
+            </li>
+            <li class="border-t-2 border-[#050b1a] pt-4">
+              <i class="fa-solid fa-brain text-xl" aria-hidden="true"></i>
+              <h3 class="font-display mt-3 text-lg font-semibold">Calibrated classification</h3>
+              <p class="mt-2 text-[#2b3447]">A TF-IDF plus calibrated Linear SVM model produces a prediction together with a real probability for every category, not just a label.</p>
+            </li>
+            <li class="border-t-2 border-[#050b1a] pt-4">
+              <i class="fa-solid fa-clipboard-check text-xl" aria-hidden="true"></i>
+              <h3 class="font-display mt-3 text-lg font-semibold">Human review queue</h3>
+              <p class="mt-2 text-[#2b3447]">Low-confidence predictions and failed extractions appear in a queue with the extracted text and full probability breakdown for a reviewer to resolve.</p>
+            </li>
+            <li class="border-t-2 border-[#050b1a] pt-4">
+              <i class="fa-solid fa-layer-group text-xl" aria-hidden="true"></i>
+              <h3 class="font-display mt-3 text-lg font-semibold">Category management</h3>
+              <p class="mt-2 text-[#2b3447]">Administrators manage the taxonomy, reassign documents between categories and are warned when a category is not supported by the deployed model.</p>
+            </li>
+            <li class="border-t-2 border-[#050b1a] pt-4">
+              <i class="fa-solid fa-gauge text-xl" aria-hidden="true"></i>
+              <h3 class="font-display mt-3 text-lg font-semibold">Dashboard and analytics</h3>
+              <p class="mt-2 text-[#2b3447]">Charts show category distribution, monthly upload trends, processing outcomes and model quality, with a verified accuracy figure computed from real reviews.</p>
+            </li>
+            <li class="border-t-2 border-[#050b1a] pt-4">
+              <i class="fa-solid fa-file-export text-xl" aria-hidden="true"></i>
+              <h3 class="font-display mt-3 text-lg font-semibold">CSV and PDF reports</h3>
+              <p class="mt-2 text-[#2b3447]">Administrators export the selected date range as a spreadsheet-ready CSV or a formatted PDF containing the metrics, the confusion matrix and per-category quality figures.</p>
+            </li>
+            <li class="border-t-2 border-[#050b1a] pt-4">
+              <i class="fa-solid fa-clock-rotate-left text-xl" aria-hidden="true"></i>
+              <h3 class="font-display mt-3 text-lg font-semibold">Audit trail</h3>
+              <p class="mt-2 text-[#2b3447]">Uploads, classifications, reviews, corrections, deletions, sign-ins and settings changes are all logged with the user, the action and the client address.</p>
+            </li>
+            <li class="border-t-2 border-[#050b1a] pt-4">
+              <i class="fa-solid fa-user-shield text-xl" aria-hidden="true"></i>
+              <h3 class="font-display mt-3 text-lg font-semibold">Three access roles</h3>
+              <p class="mt-2 text-[#2b3447]">Staff upload documents, reviewers resolve the queue, and administrators manage categories, settings, reports and deletions.</p>
+            </li>
+            <li class="border-t-2 border-[#050b1a] pt-4">
+              <i class="fa-solid fa-rotate text-xl" aria-hidden="true"></i>
+              <h3 class="font-display mt-3 text-lg font-semibold">Feedback-driven retraining</h3>
+              <p class="mt-2 text-[#2b3447]">Reviewer corrections are stored as verified feedback and can be exported or used to retrain the model through a separate, deliberate command.</p>
+            </li>
+          </ul>
+        </section>
+
+        <!-- Technology stack -->
+        <section id="stack" aria-labelledby="stack-title">
+          <h2 id="stack-title" class="font-display text-2xl font-bold">Technology stack</h2>
+          <p class="mt-3 max-w-2xl text-[#475063]">The tools used to build the backend, the model, the data layer and the interface.</p>
+          <ul class="mt-6 grid grid-cols-2 gap-3 text-sm sm:grid-cols-3 lg:grid-cols-4">
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-brands fa-python w-5 text-center" aria-hidden="true"></i>Python</li>
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-flask w-5 text-center" aria-hidden="true"></i>Flask</li>
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-database w-5 text-center" aria-hidden="true"></i>MySQL</li>
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-diagram-project w-5 text-center" aria-hidden="true"></i>SQLAlchemy</li>
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-brain w-5 text-center" aria-hidden="true"></i>Scikit-learn</li>
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-table w-5 text-center" aria-hidden="true"></i>Pandas</li>
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-key w-5 text-center" aria-hidden="true"></i>Flask-JWT-Extended</li>
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-code-branch w-5 text-center" aria-hidden="true"></i>Flask-Migrate</li>
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-file-pdf w-5 text-center" aria-hidden="true"></i>PyMuPDF</li>
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-file-word w-5 text-center" aria-hidden="true"></i>python-docx</li>
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-magnifying-glass-chart w-5 text-center" aria-hidden="true"></i>Tesseract OCR</li>
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-brands fa-js w-5 text-center" aria-hidden="true"></i>JavaScript</li>
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-brands fa-html5 w-5 text-center" aria-hidden="true"></i>HTML</li>
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-chart-pie w-5 text-center" aria-hidden="true"></i>Chart.js</li>
+            <li class="flex items-center gap-3 border border-[#dde1e8] px-4 py-3"><i class="fa-solid fa-vial-circle-check w-5 text-center" aria-hidden="true"></i>pytest</li>
+          </ul>
+          <p class="mt-4 max-w-3xl text-sm text-[#475063]">The frontend is server-rendered HTML with vanilla JavaScript modules, Tailwind CSS via CDN and Chart.js for the visualisations. There is no separate Node.js build step and no single-page application framework.</p>
+        </section>
+
+        <!-- Architecture -->
+        <section id="architecture" aria-labelledby="architecture-title">
+          <h2 id="architecture-title" class="font-display text-2xl font-bold">Architecture</h2>
+          <p class="mt-3 max-w-3xl text-[#2b3447]">The application follows an application-factory pattern with separate route, service and model layers, so that each concern can be tested and reasoned about on its own.</p>
+          <pre class="mt-6 overflow-x-auto rounded bg-[#050b1a] p-5 text-sm leading-7 text-white" aria-label="IntelliDocs architecture diagram"><code>Browser (Jinja templates + vanilla JavaScript)
+         |
+         |  JSON requests to /api
+         v
+Flask application factory
+  +-- Routes / blueprints     Auth, documents, categories,
+  |                           classification, analytics,
+  |                           activity, settings
+  +-- Service layer           Extraction, classification,
+  |                           review, storage, analytics,
+  |                           audit, settings
+  +-- ML package              Preprocessing, training,
+  |                           evaluation, inference
+  +-- Models                  SQLAlchemy ORM tables
+         |
+         v
+MySQL database  +  Stored files  +  Trained model artifact</code></pre>
+          <div class="mt-6 grid gap-6 md:grid-cols-2">
+            <div class="border-t-2 border-[#050b1a] pt-4">
+              <h3 class="font-display text-lg font-semibold">Backend request flow</h3>
+              <p class="mt-2 text-[#2b3447]">A route validates the request and delegates the work to a service. Services coordinate the model, the storage layer and the database, and write an audit record for anything important. Each stage of processing fails independently, so an extraction error never leaves a half-classified document behind.</p>
+            </div>
+            <div class="border-t-2 border-[#050b1a] pt-4">
+              <h3 class="font-display text-lg font-semibold">Frontend request flow</h3>
+              <p class="mt-2 text-[#2b3447]">Each page is a standalone document rendered by Flask. A shared JavaScript service layer handles authentication, CSRF headers, uploads with progress, timeouts, error toasts and the formatting of dates, sizes and confidence scores.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Classification pipeline -->
+        <section id="pipeline" aria-labelledby="pipeline-title">
+          <div class="flex flex-wrap items-center gap-3">
+            <h2 id="pipeline-title" class="font-display text-2xl font-bold">The classification pipeline</h2>
+            <span class="tag tag-explain">Explanatory</span>
+          </div>
+          <p class="mt-4 max-w-3xl text-[#2b3447]">The classifier is a text pipeline rather than a neural network. That choice keeps it fast to train, easy to inspect and small enough to ship as a single file, while still producing the calibrated probabilities the review workflow depends on.</p>
+          <div class="mt-6 overflow-x-auto border border-[#dde1e8]">
+            <table class="w-full min-w-[34rem] text-left text-sm">
+              <caption class="sr-only">Stages of the IntelliDocs classification pipeline</caption>
+              <thead class="bg-[#f4f5f7]">
+                <tr>
+                  <th scope="col" class="px-4 py-3 font-semibold">Stage</th>
+                  <th scope="col" class="px-4 py-3 font-semibold">What happens</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-[#dde1e8]">
+                <tr><th scope="row" class="px-4 py-3 font-semibold">Normalise</th><td class="px-4 py-3">Text is Unicode-normalised, control characters removed and whitespace collapsed, while numbers and identifiers are preserved so that references and totals stay readable to the model.</td></tr>
+                <tr><th scope="row" class="px-4 py-3 font-semibold">Vectorise</th><td class="px-4 py-3">A TF-IDF vectoriser converts the text into weighted unigram and bigram features, capped at 10,000 features, with sublinear term frequency and English stop words removed.</td></tr>
+                <tr><th scope="row" class="px-4 py-3 font-semibold">Classify</th><td class="px-4 py-3">A linear SVM separates the four document categories with balanced class weights, so a smaller category is not overwhelmed by a larger one.</td></tr>
+                <tr><th scope="row" class="px-4 py-3 font-semibold">Calibrate</th><td class="px-4 py-3">The SVM is wrapped in a sigmoid calibration step. Without this, the raw decision score would not be a probability and the confidence thresholds would be meaningless.</td></tr>
+                <tr><th scope="row" class="px-4 py-3 font-semibold">Threshold</th><td class="px-4 py-3">The calibrated probability decides the outcome: auto-classify, flag for review, or require manual classification. The probability for every category is stored alongside the result.</td></tr>
+                <tr><th scope="row" class="px-4 py-3 font-semibold">Record</th><td class="px-4 py-3">The prediction, the confidence, the model version, the per-class probabilities and the reason for review are written to the database as an immutable classification record.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h3 class="font-display mt-10 text-lg font-semibold">Training and evaluation</h3>
+          <p class="mt-3 max-w-3xl text-[#2b3447]">Training is a deliberate, repeatable command rather than something that happens on deployment. The dataset is validated first, then split with stratification so each category is represented in both halves, and the result is evaluated on data the model never saw.</p>
+          <dl class="mt-6 divide-y divide-[#dde1e8] border-y border-[#dde1e8]">
+            <div class="grid gap-2 py-5 md:grid-cols-[14rem_1fr] md:gap-8"><dt class="font-display text-lg font-semibold">Dataset validation</dt><dd class="max-w-3xl text-[#2b3447]">Labels outside the four supported categories are dropped, texts shorter than 20 characters are removed, exact duplicates are deleted, and a quality report records what was discarded and whether class imbalance remains.</dd></div>
+            <div class="grid gap-2 py-5 md:grid-cols-[14rem_1fr] md:gap-8"><dt class="font-display text-lg font-semibold">Evaluation</dt><dd class="max-w-3xl text-[#2b3447]">Accuracy, macro and weighted precision, recall and F1, a full classification report and a confusion matrix are computed on the held-out test split and stored in the model metadata.</dd></div>
+            <div class="grid gap-2 py-5 md:grid-cols-[14rem_1fr] md:gap-8"><dt class="font-display text-lg font-semibold">Safe deployment</dt><dd class="max-w-3xl text-[#2b3447]">The model and its metadata are written to temporary files and moved into place atomically, so an interrupted training run can never leave a half-written artifact in production.</dd></div>
+            <div class="grid gap-2 py-5 md:grid-cols-[14rem_1fr] md:gap-8"><dt class="font-display text-lg font-semibold">Version tracking</dt><dd class="max-w-3xl text-[#2b3447]">Each trained model receives a new version number, and its metadata records the dataset name and checksum, the training configuration, the environment versions and the metrics that belong to that exact artifact.</dd></div>
+          </dl>
+          <aside class="mt-8 border-l-4 border-[#050b1a] bg-[#f4f5f7] p-6" aria-labelledby="metric-note-title">
+            <h3 id="metric-note-title" class="font-display text-lg font-semibold">A note on the headline accuracy</h3>
+            <p class="mt-2 max-w-3xl text-[#2b3447]">The bundled starter model scores perfectly on its hold-out test set, because that set comes from a synthetic starter corpus that is clearly labelled as such. The project states this openly in the model metadata, in the CLI output and in the dashboard banner. The figure is a working demonstration of the pipeline, not evidence of real-world accuracy. Real performance is measured from human-verified reviews, and the deployed model is meant to be retrained on the organisation's own labelled documents.</p>
+          </aside>
+        </section>
+
+        <!-- Human review -->
+        <section id="review" aria-labelledby="review-title">
+          <div class="flex flex-wrap items-center gap-3">
+            <h2 id="review-title" class="font-display text-2xl font-bold">The human review loop</h2>
+            <span class="tag tag-explain">Explanatory</span>
+          </div>
+          <p class="mt-4 max-w-3xl text-[#2b3447]">The thresholds are the heart of the design. They convert a raw probability into an operational decision, and they are adjustable by an administrator at runtime without a redeployment.</p>
+          <div class="mt-6 overflow-x-auto border border-[#dde1e8]">
+            <table class="w-full min-w-[34rem] text-left text-sm">
+              <caption class="sr-only">IntelliDocs confidence bands and the action taken in each</caption>
+              <thead class="bg-[#f4f5f7]">
+                <tr>
+                  <th scope="col" class="px-4 py-3 font-semibold">Band</th>
+                  <th scope="col" class="px-4 py-3 font-semibold">Confidence</th>
+                  <th scope="col" class="px-4 py-3 font-semibold">Action</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-[#dde1e8]">
+                <tr><th scope="row" class="px-4 py-3 font-semibold">Auto-classified</th><td class="px-4 py-3">At or above 0.80</td><td class="px-4 py-3">Filed automatically under the predicted category and removed from the review queue.</td></tr>
+                <tr><th scope="row" class="px-4 py-3 font-semibold">Flagged, low confidence</th><td class="px-4 py-3">0.60 to 0.80</td><td class="px-4 py-3">Sent to the review queue so a reviewer verifies the prediction and confirms or corrects it.</td></tr>
+                <tr><th scope="row" class="px-4 py-3 font-semibold">Manual review</th><td class="px-4 py-3">Below 0.60</td><td class="px-4 py-3">Sent to the review queue with a clear instruction to assign the category manually from the document content.</td></tr>
+                <tr><th scope="row" class="px-4 py-3 font-semibold">Failed processing</th><td class="px-4 py-3">Not applicable</td><td class="px-4 py-3">Extraction or classification errors also appear in the queue, so a document is never silently lost.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="mt-4 max-w-3xl text-sm text-[#475063]">The thresholds are validated on save: the review threshold must be lower than the confidence threshold, and both must sit between 0.50 and 1.00.</p>
+          <h3 class="font-display mt-10 text-lg font-semibold">What a reviewer sees and does</h3>
+          <ol class="mt-4 space-y-4 max-w-3xl text-[#2b3447]">
+            <li class="flex gap-4 border-t border-[#c5cad4] py-4"><span class="font-display font-bold" aria-hidden="true">1.</span><span>The queue lists each document with the model's category, the confidence score, the reason it was flagged and the upload date.</span></li>
+            <li class="flex gap-4 border-t border-[#c5cad4] py-4"><span class="font-display font-bold" aria-hidden="true">2.</span><span>The workbench shows the preview or the extracted text alongside the probability for every category, so the reviewer judges the document rather than the number.</span></li>
+            <li class="flex gap-4 border-t border-[#c5cad4] py-4"><span class="font-display font-bold" aria-hidden="true">3.</span><span>Confirming the prediction marks the classification as reviewed. Correcting it marks the classification as corrected and records the original label.</span></li>
+            <li class="flex gap-4 border-t border-[#c5cad4] py-4"><span class="font-display font-bold" aria-hidden="true">4.</span><span>Every correction is stored as verified feedback, which becomes training data for a later, deliberate retraining command.</span></li>
+          </ol>
+          <aside class="mt-8 border-l-4 border-[#050b1a] bg-[#f4f5f7] p-6" aria-labelledby="retrain-note-title">
+            <h3 id="retrain-note-title" class="font-display text-lg font-semibold">Corrections never retrain silently</h3>
+            <p class="mt-2 max-w-3xl text-[#2b3447]">A reviewer correcting a document does not change the model that is serving traffic. The correction is queued as verified feedback, and an administrator runs the separate retraining command when they are ready to deploy a new version. Classification history and feedback are preserved across a retrain.</p>
+          </aside>
+        </section>
+
+        <!-- Extraction -->
+        <section id="extraction" aria-labelledby="extraction-title">
+          <div class="flex flex-wrap items-center gap-3">
+            <h2 id="extraction-title" class="font-display text-2xl font-bold">Text extraction</h2>
+            <span class="tag tag-explain">Explanatory</span>
+          </div>
+          <p class="mt-4 max-w-3xl text-[#2b3447]">Extraction is deliberately conservative. Each format is handled by the library that understands it best, and a document that cannot be read produces a clear error rather than an empty classification.</p>
+          <dl class="mt-6 divide-y divide-[#dde1e8] border-y border-[#dde1e8]">
+            <div class="grid gap-2 py-5 md:grid-cols-[14rem_1fr] md:gap-8"><dt class="font-display text-lg font-semibold">PDF</dt><dd class="max-w-3xl text-[#2b3447]">Embedded text is read with PyMuPDF. If the page has no usable text, the page is rendered at 200 DPI and passed through Tesseract OCR. The page count is checked against the configured limit before any work begins.</dd></div>
+            <div class="grid gap-2 py-5 md:grid-cols-[14rem_1fr] md:gap-8"><dt class="font-display text-lg font-semibold">DOCX</dt><dd class="max-w-3xl text-[#2b3447]">Paragraphs and table cells are collected with python-docx. Table rows are joined with a separator so column structure survives into the text the model reads.</dd></div>
+            <div class="grid gap-2 py-5 md:grid-cols-[14rem_1fr] md:gap-8"><dt class="font-display text-lg font-semibold">TXT</dt><dd class="max-w-3xl text-[#2b3447]">Encoding is detected by trying UTF-8 with BOM, UTF-16 and Latin-1 in turn. Files that turn out to contain binary data are rejected.</dd></div>
+            <div class="grid gap-2 py-5 md:grid-cols-[14rem_1fr] md:gap-8"><dt class="font-display text-lg font-semibold">Images</dt><dd class="max-w-3xl text-[#2b3447]">PNG and JPEG files are opened with Pillow, converted to RGB and passed to Tesseract for OCR. Image classification is refused when OCR is switched off, rather than producing a misleading low-confidence result.</dd></div>
+            <div class="grid gap-2 py-5 md:grid-cols-[14rem_1fr] md:gap-8"><dt class="font-display text-lg font-semibold">Minimum usable text</dt><dd class="max-w-3xl text-[#2b3447]">Anything under 20 characters is treated as unreadable. The document is sent to the review queue with the reason, so a human can still file it.</dd></div>
+          </dl>
+        </section>
+
+        <!-- Data model -->
+        <section id="data-model" aria-labelledby="data-model-title">
+          <h2 id="data-model-title" class="font-display text-2xl font-bold">Data model</h2>
+          <p class="mt-3 max-w-3xl text-[#2b3447]">The MySQL tables separate the documents from the classifications applied to them, which is what allows a document to keep its full history.</p>
+          <div class="mt-6 overflow-x-auto border border-[#dde1e8]">
+            <table class="w-full min-w-[36rem] text-left text-sm">
+              <caption class="sr-only">Main IntelliDocs database tables</caption>
+              <thead class="bg-[#f4f5f7]">
+                <tr>
+                  <th scope="col" class="px-4 py-3 font-semibold">Table</th>
+                  <th scope="col" class="px-4 py-3 font-semibold">Purpose</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-[#dde1e8]">
+                <tr><th scope="row" class="px-4 py-3 font-semibold">users</th><td class="px-4 py-3">Accounts, scrypt password hashes, roles and activation state.</td></tr>
+                <tr><th scope="row" class="px-4 py-3 font-semibold">categories</th><td class="px-4 py-3">The document taxonomy, with a description and a flag showing whether the deployed model supports each category.</td></tr>
+                <tr><th scope="row" class="px-4 py-3 font-semibold">documents</th><td class="px-4 py-3">Uploaded files, their hash, extracted text, page and character counts, OCR flag, processing status and soft-delete marker.</td></tr>
+                <tr><th scope="row" class="px-4 py-3 font-semibold">classifications</th><td class="px-4 py-3">Each prediction with its confidence, per-class probabilities, model version, review state, reviewer and notes.</td></tr>
+                <tr><th scope="row" class="px-4 py-3 font-semibold">feedback</th><td class="px-4 py-3">Verified reviewer corrections, holding the original prediction and the corrected category for later retraining.</td></tr>
+                <tr><th scope="row" class="px-4 py-3 font-semibold">activity_logs</th><td class="px-4 py-3">The audit trail of user and system actions, with the client address and timestamp.</td></tr>
+                <tr><th scope="row" class="px-4 py-3 font-semibold">system_settings</th><td class="px-4 py-3">Runtime settings such as the confidence thresholds, upload policy and the active model version.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="mt-4 max-w-3xl text-sm text-[#475063]">Documents are soft-deleted. The database record is retained so that the audit history stays intact, and the physical file is removed separately.</p>
+        </section>
+
+        <!-- Security -->
+        <section id="security" aria-labelledby="security-title">
+          <h2 id="security-title" class="font-display text-2xl font-bold">Security and reliability</h2>
+          <p class="mt-3 max-w-3xl text-[#2b3447]">The project applies controls at several levels so that documents and the decisions made about them are protected and traceable.</p>
+          <ul class="mt-4 max-w-3xl list-disc space-y-2 pl-5 text-[#2b3447]">
+            <li>Session tokens are stored in HttpOnly cookies and are never written to localStorage, so a cross-site script cannot read them.</li>
+            <li>Double-submit CSRF protection on every state-changing request, with the token read from a cookie and sent as a header.</li>
+            <li>Passwords are hashed with scrypt, and the password change endpoint rejects reusing the current password.</li>
+            <li>Role-based access control with three roles, where an administrator implicitly holds every permission.</li>
+            <li>The client filename is never used for storage. Files are saved under a generated identifier, so a crafted name cannot influence the path on disk.</li>
+            <li>Uploads are written to a temporary directory, checked for size and signature, hashed, and only then moved into permanent storage.</li>
+            <li>Duplicate uploads are detected by SHA-256 content hash, and stored paths are verified to remain inside the upload root.</li>
+            <li>The declared MIME type of a file is confirmed against its actual signature before it is accepted.</li>
+            <li>Security headers are applied to every response: content type sniffing blocked, framing restricted to the same origin, a strict referrer policy and a restrictive permissions policy.</li>
+            <li>Authenticated pages and API responses are served with caching disabled, so document content is not kept in shared caches.</li>
+            <li>Upload size and page limits are enforced on the server, not only in the browser.</li>
+            <li>Every important action is written to the activity log with the user, the action, the document and the client address.</li>
+          </ul>
+        </section>
+
+        <!-- Testing -->
+        <section id="testing" aria-labelledby="testing-title">
+          <div class="flex flex-wrap items-center gap-3">
+            <h2 id="testing-title" class="font-display text-2xl font-bold">Testing</h2>
+            <span class="tag tag-result">Project result</span>
+          </div>
+          <p class="mt-4 max-w-3xl text-[#2b3447]">The application is covered by an automated test suite run with pytest. The suite uses an in-memory SQLite database and a testing configuration that disables OCR, so the tests run quickly and without needing MySQL or Tesseract installed.</p>
+          <div class="mt-6 overflow-x-auto border border-[#dde1e8]">
+            <table class="w-full min-w-[32rem] text-left text-sm">
+              <caption class="sr-only">IntelliDocs test suite coverage by area</caption>
+              <thead class="bg-[#f4f5f7]">
+                <tr>
+                  <th scope="col" class="px-4 py-3 font-semibold">Test module</th>
+                  <th scope="col" class="px-4 py-3 font-semibold">Area covered</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-[#dde1e8]">
+                <tr><th scope="row" class="px-4 py-3 font-semibold">test_auth.py</th><td class="px-4 py-3">Sign-in, sign-out, session handling, profile updates and password changes.</td></tr>
+                <tr><th scope="row" class="px-4 py-3 font-semibold">test_permissions.py</th><td class="px-4 py-3">Role boundaries across the API, confirming that each role sees only what it should.</td></tr>
+                <tr><th scope="row" class="px-4 py-3 font-semibold">test_upload.py</th><td class="px-4 py-3">File validation, duplicate detection, size limits and the upload response.</td></tr>
+                <tr><th scope="row" class="px-4 py-3 font-semibold">test_extraction.py</th><td class="px-4 py-3">Text extraction for each supported format and the error paths for unreadable files.</td></tr>
+                <tr><th scope="row" class="px-4 py-3 font-semibold">test_classification.py</th><td class="px-4 py-3">Prediction results, confidence banding and the review decision workflow.</td></tr>
+                <tr><th scope="row" class="px-4 py-3 font-semibold">test_categories.py</th><td class="px-4 py-3">Category creation, editing, reassignment and deletion rules.</td></tr>
+                <tr><th scope="row" class="px-4 py-3 font-semibold">test_reports_activity.py</th><td class="px-4 py-3">Analytics aggregates, report exports and the activity log.</td></tr>
+                <tr><th scope="row" class="px-4 py-3 font-semibold">test_settings.py</th><td class="px-4 py-3">Runtime settings, threshold validation and the upload policy.</td></tr>
+                <tr><th scope="row" class="px-4 py-3 font-semibold">test_pages.py</th><td class="px-4 py-3">Page routing and the redirect behaviour for protected and public pages.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- Setup -->
+        <section id="setup" aria-labelledby="setup-title">
+          <h2 id="setup-title" class="font-display text-2xl font-bold">Running the project</h2>
+          <p class="mt-3 max-w-3xl text-[#2b3447]">IntelliDocs is a Python application. It needs Python, MySQL, and Tesseract OCR if scanned documents and images are to be processed.</p>
+          <ol class="mt-8 border-l-2 border-[#050b1a]">
+            <li class="relative pb-7 pl-8"><span class="absolute -left-[0.8rem] top-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#050b1a] text-xs font-semibold text-white" aria-hidden="true">1</span><h3 class="font-semibold">Clone the repository</h3><p class="mt-1 max-w-2xl text-[#2b3447]">Download the project from GitHub and open a terminal in the project folder.</p><pre class="mt-2 overflow-x-auto rounded bg-[#f4f5f7] p-4 text-sm"><code>git clone https://github.com/portfoliodevme/document.git
+cd document</code></pre></li>
+            <li class="relative pb-7 pl-8"><span class="absolute -left-[0.8rem] top-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#050b1a] text-xs font-semibold text-white" aria-hidden="true">2</span><h3 class="font-semibold">Create a virtual environment</h3><p class="mt-1 max-w-2xl text-[#2b3447]">Install the Python dependencies from the requirements file.</p><pre class="mt-2 overflow-x-auto rounded bg-[#f4f5f7] p-4 text-sm"><code>python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt</code></pre></li>
+            <li class="relative pb-7 pl-8"><span class="absolute -left-[0.8rem] top-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#050b1a] text-xs font-semibold text-white" aria-hidden="true">3</span><h3 class="font-semibold">Configure the environment</h3><p class="mt-1 max-w-2xl text-[#2b3447]">Copy <code class="bg-[#f4f5f7] px-1.5 py-0.5 text-sm">.env.example</code> to <code class="bg-[#f4f5f7] px-1.5 py-0.5 text-sm">.env</code> and set the database URL, the secret keys, the storage paths and the Tesseract executable path.</p></li>
+            <li class="relative pb-7 pl-8"><span class="absolute -left-[0.8rem] top-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#050b1a] text-xs font-semibold text-white" aria-hidden="true">4</span><h3 class="font-semibold">Prepare the database</h3><p class="mt-1 max-w-2xl text-[#2b3447]">Create the MySQL database, then initialise the tables, the default categories and the system settings.</p><pre class="mt-2 overflow-x-auto rounded bg-[#f4f5f7] p-4 text-sm"><code>set FLASK_APP=app.py
+flask init-db</code></pre></li>
+            <li class="relative pb-7 pl-8"><span class="absolute -left-[0.8rem] top-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#050b1a] text-xs font-semibold text-white" aria-hidden="true">5</span><h3 class="font-semibold">Create the first administrator</h3><p class="mt-1 max-w-2xl text-[#2b3447]">Use the built-in CLI command to create the administrator account securely.</p><pre class="mt-2 overflow-x-auto rounded bg-[#f4f5f7] p-4 text-sm"><code>flask create-admin</code></pre></li>
+            <li class="relative pb-7 pl-8"><span class="absolute -left-[0.8rem] top-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#050b1a] text-xs font-semibold text-white" aria-hidden="true">6</span><h3 class="font-semibold">Train and deploy the model</h3><p class="mt-1 max-w-2xl text-[#2b3447]">Train the classifier from the starter dataset and deploy it. The command prints the version, the labels and the hold-out metrics.</p><pre class="mt-2 overflow-x-auto rounded bg-[#f4f5f7] p-4 text-sm"><code>flask train-model
+flask model-info</code></pre></li>
+            <li class="relative pb-7 pl-8"><span class="absolute -left-[0.8rem] top-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#050b1a] text-xs font-semibold text-white" aria-hidden="true">7</span><h3 class="font-semibold">Start the application</h3><p class="mt-1 max-w-2xl text-[#2b3447]">Run the Flask entry point and open the application in the browser.</p><pre class="mt-2 overflow-x-auto rounded bg-[#f4f5f7] p-4 text-sm"><code>python app.py</code></pre></li>
+            <li class="relative pl-8"><span class="absolute -left-[0.8rem] top-0 flex h-6 w-6 items-center justify-center rounded-full bg-[#050b1a] text-xs font-semibold text-white" aria-hidden="true">8</span><h3 class="font-semibold">Improve the model with real documents</h3><p class="mt-1 max-w-2xl text-[#2b3447]">Once reviewers have corrected enough documents, export the verified corrections or retrain directly from them.</p><pre class="mt-2 overflow-x-auto rounded bg-[#f4f5f7] p-4 text-sm"><code>flask export-feedback
+flask retrain-from-feedback</code></pre></li>
+          </ol>
+          <p class="mt-4 max-w-3xl text-sm text-[#475063]">The full configuration options, the API endpoints and the CLI commands are documented in the repository's <code class="bg-[#f4f5f7] px-1.5 py-0.5 text-sm">.env.example</code> file and in the application configuration.</p>
+        </section>
+
+        <!-- Scope -->
+        <section id="scope" aria-labelledby="scope-title">
+          <h2 id="scope-title" class="font-display text-2xl font-bold">Scope and project notes</h2>
+          <ul class="mt-4 max-w-3xl list-disc space-y-2 pl-5 text-[#2b3447]">
+            <li>The taxonomy is fixed to four categories, Academic, Administrative, Financial and Legal. Additional categories can be created in the interface, but a new category is not something the deployed model can predict until the model is retrained.</li>
+            <li>The bundled starter model is trained on a synthetic corpus, so its hold-out metrics describe that corpus and nothing else. Real accuracy is read from human-verified reviews.</li>
+            <li>Classification happens during the upload request rather than in a background queue, which keeps the implementation simple and gives the user an immediate result.</li>
+            <li>Processing is synchronous, so very large files will take longer to classify. The upload limit and page limit bound the worst case.</li>
+            <li>The MySQL configuration is aimed at a local XAMPP installation, but the application itself is a standard cross-platform Flask project.</li>
+            <li>OCR quality depends on the Tesseract installation and on the quality of the scan. Documents that OCR cannot read are sent to the review queue rather than discarded.</li>
+            <li>Corrections improve the model only when an administrator runs the retraining command. The production model is never changed as a side effect of a review.</li>
+            <li>The project is intended for document filing, review and demonstration, not as a replacement for a full enterprise records management platform.</li>
+          </ul>
+        </section>
+      </div>
+    </div>
+
+    <!-- Project resources -->
+    <section id="resources" class="border-t border-[#dde1e8] bg-[#f4f5f7]" aria-labelledby="resources-title">
+      <div class="mx-auto max-w-6xl px-5 py-16 sm:px-8">
+        <h2 id="resources-title" class="font-display text-3xl font-bold">Project Resources</h2>
+        <p class="mt-3 max-w-2xl text-[#475063]">The source code and documentation are available in the GitHub repository.</p>
+        <ul class="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <li class="flex flex-col p-7 transition border border-[#dde1e8] bg-white hover:border-[#050b1a]">
+            <span class="flex h-12 w-12 items-center justify-center rounded bg-[#050b1a] text-white"><i class="fa-solid fa-code text-xl" aria-hidden="true"></i></span>
+            <h3 class="font-display mt-5 text-xl font-semibold">Source Code</h3>
+            <p class="mt-2 text-[#2b3447]">Browse the complete Flask application, models, services, machine learning package and frontend files.</p>
+            <div class="mt-auto pt-6"><a href="https://github.com/portfoliodevme/document" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 rounded px-6 py-3 text-sm font-semibold transition bg-[#050b1a] text-white hover:bg-[#16213d]"><i class="fa-solid fa-arrow-up-right-from-square text-xs" aria-hidden="true"></i>View Source Code</a></div>
+          </li>
+          <li class="flex flex-col p-7 transition border border-[#dde1e8] bg-white hover:border-[#050b1a]">
+            <span class="flex h-12 w-12 items-center justify-center rounded bg-[#050b1a] text-white"><i class="fa-solid fa-brain text-xl" aria-hidden="true"></i></span>
+            <h3 class="font-display mt-5 text-xl font-semibold">Machine Learning Package</h3>
+            <p class="mt-2 text-[#2b3447]">The training, evaluation, preprocessing and inference code, together with the versioned model artifact and its metadata.</p>
+            <div class="mt-auto pt-6"><a href="https://github.com/portfoliodevme/document" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 rounded px-6 py-3 text-sm font-semibold transition bg-[#050b1a] text-white hover:bg-[#16213d]"><i class="fa-solid fa-arrow-up-right-from-square text-xs" aria-hidden="true"></i>Open ML Code</a></div>
+          </li>
+          <li class="flex flex-col p-7 transition border border-[#dde1e8] bg-white hover:border-[#050b1a]">
+            <span class="flex h-12 w-12 items-center justify-center rounded bg-[#050b1a] text-white"><i class="fa-solid fa-vial-circle-check text-xl" aria-hidden="true"></i></span>
+            <h3 class="font-display mt-5 text-xl font-semibold">Test Suite</h3>
+            <p class="mt-2 text-[#2b3447]">The pytest suite covering authentication, permissions, uploads, extraction, classification, categories, reports and settings.</p>
+            <div class="mt-auto pt-6"><a href="https://github.com/portfoliodevme/document" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 rounded px-6 py-3 text-sm font-semibold transition bg-[#050b1a] text-white hover:bg-[#16213d]"><i class="fa-solid fa-arrow-up-right-from-square text-xs" aria-hidden="true"></i>View Tests</a></div>
+          </li>
+          <li class="flex flex-col p-7 transition border border-[#dde1e8] bg-white hover:border-[#050b1a]">
+            <span class="flex h-12 w-12 items-center justify-center rounded bg-[#050b1a] text-white"><i class="fa-solid fa-book text-xl" aria-hidden="true"></i></span>
+            <h3 class="font-display mt-5 text-xl font-semibold">Documentation</h3>
+            <p class="mt-2 text-[#2b3447]">Read the environment configuration reference, the CLI commands and the API endpoint list.</p>
+            <div class="mt-auto pt-6"><a href="https://github.com/portfoliodevme/document" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 rounded px-6 py-3 text-sm font-semibold transition bg-[#050b1a] text-white hover:bg-[#16213d]"><i class="fa-solid fa-arrow-up-right-from-square text-xs" aria-hidden="true"></i>Open Documentation</a></div>
+          </li>
+          <li class="flex flex-col p-7 transition border border-[#dde1e8] bg-white hover:border-[#050b1a]">
+            <span class="flex h-12 w-12 items-center justify-center rounded bg-[#050b1a] text-white"><i class="fa-solid fa-database text-xl" aria-hidden="true"></i></span>
+            <h3 class="font-display mt-5 text-xl font-semibold">Dataset</h3>
+            <p class="mt-2 text-[#2b3447]">The labelled training corpus, with the loader and the validation rules that clean it before training.</p>
+            <div class="mt-auto pt-6"><a href="https://github.com/portfoliodevme/document" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 rounded px-6 py-3 text-sm font-semibold transition bg-[#050b1a] text-white hover:bg-[#16213d]"><i class="fa-solid fa-arrow-up-right-from-square text-xs" aria-hidden="true"></i>View Dataset</a></div>
+          </li>
+          <li class="flex flex-col p-7 transition on-dark border border-[#050b1a] bg-[#050b1a] text-white">
+            <span class="flex h-12 w-12 items-center justify-center rounded bg-white text-[#050b1a]"><i class="fa-brands fa-github text-xl" aria-hidden="true"></i></span>
+            <h3 class="font-display mt-5 text-xl font-semibold">GitHub Repository</h3>
+            <p class="mt-2 text-[#d6dcea]">Open the complete project repository and follow the commit history.</p>
+            <div class="mt-auto pt-6"><a href="https://github.com/portfoliodevme/document" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 rounded px-6 py-3 text-sm font-semibold transition bg-white text-[#050b1a] hover:bg-[#e6e9f0]"><i class="fa-solid fa-arrow-up-right-from-square text-xs" aria-hidden="true"></i>Open Repository</a></div>
+          </li>
+        </ul>
+
+        <div class="mt-14 grid gap-10 lg:grid-cols-[1fr_1.2fr]">
+          <div>
+            <h3 class="font-display text-xl font-semibold">The repository contains</h3>
+            <ul class="mt-4 grid gap-x-6 gap-y-2 text-sm text-[#2b3447] sm:grid-cols-2">
+              <li><i class="fa-solid fa-check mr-2 text-[#475063]" aria-hidden="true"></i>Flask application factory</li>
+              <li><i class="fa-solid fa-check mr-2 text-[#475063]" aria-hidden="true"></i>SQLAlchemy models and migrations</li>
+              <li><i class="fa-solid fa-check mr-2 text-[#475063]" aria-hidden="true"></i>Machine learning training and inference</li>
+              <li><i class="fa-solid fa-check mr-2 text-[#475063]" aria-hidden="true"></i>Text extraction and OCR integration</li>
+              <li><i class="fa-solid fa-check mr-2 text-[#475063]" aria-hidden="true"></i>Document, review and analytics services</li>
+              <li><i class="fa-solid fa-check mr-2 text-[#475063]" aria-hidden="true"></i>HTML, CSS and JavaScript frontend</li>
+              <li><i class="fa-solid fa-check mr-2 text-[#475063]" aria-hidden="true"></i>Audit trail and feedback capture</li>
+              <li><i class="fa-solid fa-check mr-2 text-[#475063]" aria-hidden="true"></i>Automated test suite</li>
+              <li><i class="fa-solid fa-check mr-2 text-[#475063]" aria-hidden="true"></i>CLI commands for setup and retraining</li>
+              <li><i class="fa-solid fa-check mr-2 text-[#475063]" aria-hidden="true"></i>Requirements and environment reference</li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-display text-xl font-semibold">Project type</h3>
+            <p class="mt-2 text-sm text-[#475063]">A systems development and machine learning project combining backend engineering, database design, secure file handling, a text classification model and a human-in-the-loop review interface.</p>
+            <dl class="mt-4 divide-y divide-[#dde1e8] border-y border-[#dde1e8] text-sm">
+              <div class="grid gap-1 py-3 md:grid-cols-[10rem_1fr] md:gap-6"><dt class="font-semibold">Application</dt><dd>Web-based document classification and review</dd></div>
+              <div class="grid gap-1 py-3 md:grid-cols-[10rem_1fr] md:gap-6"><dt class="font-semibold">Input formats</dt><dd>PDF, DOCX, TXT, PNG and JPEG</dd></div>
+              <div class="grid gap-1 py-3 md:grid-cols-[10rem_1fr] md:gap-6"><dt class="font-semibold">Model</dt><dd>TF-IDF plus calibrated Linear SVM over four categories</dd></div>
+              <div class="grid gap-1 py-3 md:grid-cols-[10rem_1fr] md:gap-6"><dt class="font-semibold">Key concern</dt><dd>Trustworthy automation, human accountability and auditability</dd></div>
+              <div class="grid gap-1 py-3 md:grid-cols-[10rem_1fr] md:gap-6"><dt class="font-semibold">Repository</dt><dd><a href="https://github.com/portfoliodevme/document" target="_blank" rel="noopener noreferrer" class="font-semibold underline underline-offset-4">github.com/portfoliodevme/document</a></dd></div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Back to portfolio -->
+    <section class="on-dark bg-[#050b1a] text-white" aria-labelledby="back-title">
+      <div class="mx-auto flex max-w-6xl flex-col gap-6 px-5 py-12 sm:px-8 md:flex-row md:items-center md:justify-between">
+        <div>
+          <h2 id="back-title" class="font-display text-2xl font-bold">More from Edwin Msilimba</h2>
+          <p class="mt-2 max-w-xl text-[#b7c0d1]">See the other projects and the skills behind this work.</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a href="projects.html" class="rounded bg-white px-6 py-3 text-sm font-semibold text-[#050b1a] transition hover:bg-[#e6e9f0]">All Projects</a>
+          <a href="odbrms.html" class="rounded border border-white px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#16213d]">ODBRMS Project</a>
+          <a href="index.html" class="rounded border border-white px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#16213d]">About Edwin</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="on-dark bg-[#050b1a] text-white">
+    <div class="mx-auto max-w-6xl px-5 py-12 sm:px-8">
+      <div class="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
+        <div>
+          <p class="font-display text-lg font-semibold">Edwin Msilimba</p>
+          <p class="mt-3 text-sm text-[#b7c0d1]">BSc Computer Science<br>DMI University</p>
+        </div>
+        <ul class="space-y-3 text-sm" aria-label="Footer pages">
+          <li><a href="index.html" class="underline-offset-4 hover:underline">Home</a></li>
+          <li><a href="projects.html" class="underline-offset-4 hover:underline">Projects</a></li>
+          <li><a href="project.html" class="underline-offset-4 hover:underline">Featured Project</a></li>
+          <li><a href="odbrms.html" class="underline-offset-4 hover:underline">ODBRMS Project</a></li>
+          <li><a href="intellidocs.html" class="underline-offset-4 hover:underline">IntelliDocs Project</a></li>
+        </ul>
+        <ul class="space-y-3 text-sm" aria-label="Contact links">
+          <li><a href="https://github.com/Edoh478/" target="_blank" rel="noopener noreferrer" class="underline-offset-4 hover:underline"><i class="fa-brands fa-github mr-2" aria-hidden="true"></i>GitHub</a></li>
+          <li><a href="#" data-link="EMAIL_ADDRESS" class="underline-offset-4 hover:underline"><i class="fa-solid fa-envelope mr-2" aria-hidden="true"></i>Email</a></li>
+          <li><a href="#" data-link="LINKEDIN_URL" class="underline-offset-4 hover:underline"><i class="fa-brands fa-linkedin mr-2" aria-hidden="true"></i>LinkedIn</a></li>
+        </ul>
+      </div>
+      <p class="mt-10 border-t border-[#1d2742] pt-6 text-xs text-[#b7c0d1]">&copy; 2026 Edwin Msilimba</p>
+    </div>
+  </footer>
+</body>
+</html>
