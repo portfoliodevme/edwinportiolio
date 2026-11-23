@@ -3,157 +3,318 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sentinel Awareness | Social Engineering Awareness Simulation</title>
-  <meta name="description" content="Consent-based social engineering awareness simulation platform">
+  <title>Sentinel Awareness | Edwin Msilimba</title>
+  <meta name="description" content="Sentinel Awareness is a consent-based Flask platform for safe social engineering simulations, security training, assessments and privacy-conscious reporting.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Sentinel Awareness | Edwin Msilimba">
+  <meta property="og:description" content="A consent-based social engineering awareness platform with simulated inbox campaigns, training, assessments, analytics and reports.">
+  <meta property="og:site_name" content="Edwin Msilimba">
+  <meta name="twitter:card" content="summary">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js" defer></script>
+  <style>
+    body { font-family: "IBM Plex Sans", Arial, sans-serif; }
+    .font-display { font-family: "Source Serif 4", Georgia, serif; }
+    .skip-link { position: absolute; left: -9999px; top: 0; z-index: 100; }
+    .skip-link:focus { left: 1rem; top: 1rem; background: white; padding: .75rem 1rem; }
+  </style>
 </head>
-<body class="bg-slate-50">
-
+<body class="bg-white text-[#050b1a] antialiased">
   <a href="#main" class="skip-link">Skip to main content</a>
-
-  <header class="sticky top-0 z-50 border-b border-slate-200 bg-white">
+  <header class="sticky top-0 z-50 border-b border-[#dde1e8] bg-white">
     <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
-      <a href="index.html" class="font-display text-base font-semibold text-slate-950">Sentinel Awareness</a>
-      <nav aria-label="Primary" class="hidden items-center gap-7 lg:flex">
-        <a href="index.html" class="flex h-16 items-center border-b-2 px-1 text-sm border-transparent text-slate-400 hover:text-slate-950">Home</a>
-        <a href="projects.html" class="flex h-16 items-center border-b-2 px-1 text-sm border-transparent text-slate-400 hover:text-slate-950">Projects</a>
-        <a href="project.html" class="flex h-16 items-center border-b-2 px-1 text-sm border-slate-600 font-semibold text-slate-950" aria-current="page">Featured</a>
+      <a href="index.html" class="font-display text-base font-semibold text-[#050b1a]">Edwin Msilimba</a>
+      <nav aria-label="Primary" class="hidden items-center gap-5 xl:flex">
+        <a href="index.html" class="flex h-16 items-center border-b-2 border-transparent px-1 text-sm text-[#475063] hover:text-[#050b1a]">Home</a>
+        <a href="projects.html" class="flex h-16 items-center border-b-2 border-[#050b1a] px-1 text-sm font-semibold text-[#050b1a]" aria-current="page">Projects</a>
+        <a href="project.html" class="flex h-16 items-center border-b-2 border-transparent px-1 text-sm text-[#475063] hover:text-[#050b1a]">Featured Project</a>
+        <a href="odbrms.html" class="flex h-16 items-center border-b-2 border-transparent px-1 text-sm text-[#475063] hover:text-[#050b1a]">ODBRMS</a>
+        <a href="intellidocs.html" class="flex h-16 items-center border-b-2 border-transparent px-1 text-sm text-[#475063] hover:text-[#050b1a]">IntelliDocs</a>
+        <a href="https://github.com/Edoh478/" target="_blank" rel="noopener noreferrer" class="flex h-16 items-center gap-2 border-b-2 border-transparent px-1 text-sm text-[#475063] hover:text-[#050b1a]"><i class="fa-brands fa-github" aria-hidden="true"></i>GitHub</a>
+        <a href="index.html#contact" class="flex h-16 items-center border-b-2 border-transparent px-1 text-sm text-[#475063] hover:text-[#050b1a]">Contact</a>
       </nav>
       <button id="menu-btn" type="button" aria-expanded="false" aria-controls="mobile-menu"
-        class="flex h-10 w-10 items-center justify-center rounded border border-slate-300 text-slate-500 lg:hidden">
+        class="flex h-10 w-10 items-center justify-center rounded border border-[#dde1e8] text-[#050b1a] xl:hidden">
         <i class="fa-solid fa-bars" aria-hidden="true"></i>
         <span class="sr-only">Toggle navigation menu</span>
       </button>
-    </nav>
-    <nav id="mobile-menu" aria-label="Mobile" class="hidden border-t border-slate-200 bg-white lg:hidden">
-      <a href="index.html" class="block border-l-4 px-4 py-3 text-sm border-transparent text-slate-400">Home</a>
-      <a href="projects.html" class="block border-l-4 px-4 py-3 text-sm border-transparent text-slate-400">Projects</a>
-      <a href="project.html" class="block border-l-4 px-4 py-3 text-sm border-slate-600 bg-slate-50 font-semibold">Featured</a>
-      <a href="https://github.com/Edoh478/" target="_blank" rel="noopener noreferrer" class="block border-l-4 border-transparent px-4 py-3 text-sm text-slate-400"><i class="fa-brands fa-github mr-2" aria-hidden="true"></i>GitHub</a>
+    </div>
+    <nav id="mobile-menu" aria-label="Mobile" class="hidden border-t border-[#dde1e8] bg-white xl:hidden">
+      <a href="index.html" class="block border-l-4 border-transparent px-4 py-3 text-sm text-[#475063]">Home</a>
+      <a href="projects.html" class="block border-l-4 border-[#050b1a] bg-[#f4f5f7] px-4 py-3 text-sm font-semibold text-[#050b1a]" aria-current="page">Projects</a>
+      <a href="project.html" class="block border-l-4 border-transparent px-4 py-3 text-sm text-[#475063]">Featured Project</a>
+      <a href="odbrms.html" class="block border-l-4 border-transparent px-4 py-3 text-sm text-[#475063]">ODBRMS</a>
+      <a href="intellidocs.html" class="block border-l-4 border-transparent px-4 py-3 text-sm text-[#475063]">IntelliDocs</a>
+      <a href="https://github.com/Edoh478/" target="_blank" rel="noopener noreferrer" class="block border-l-4 border-transparent px-4 py-3 text-sm text-[#475063]"><i class="fa-brands fa-github mr-2" aria-hidden="true"></i>GitHub</a>
+      <a href="index.html#contact" class="block border-l-4 border-transparent px-4 py-3 text-sm text-[#475063]">Contact</a>
     </nav>
   </header>
 
+  <noscript>
+    <p class="bg-[#fff8e8] px-5 py-3 text-sm">Project information is available below. Open the GitHub repository for the source code.</p>
+  </noscript>
+
   <main id="main">
-    <section class="border-b border-slate-200 bg-slate-50" aria-labelledby="page-title">
+    <section class="border-b border-[#dde1e8] bg-[#f4f5f7]" aria-labelledby="page-title">
       <div class="mx-auto max-w-6xl px-5 py-12 sm:px-8">
-        <h1 class="font-display text-3xl font-bold leading-tight sm:text-4xl">Sentinel Awareness</h1>
-        <p class="mt-4 text-sm text-slate-500">Consent-based social engineering awareness simulation platform</p>
-      </div>
-    </section>
-
-    <section id="overview" class="mx-auto grid max-w-6xl gap-12 px-5 py-16 sm:px-8">
-      <div class="flex flex-wrap items-center gap-3 mb-6">
-        <h2 class="font-display text-2xl font-bold">Project overview</h2>
-        <span class="tag tag-explain">Explanatory</span>
-      </div>
-      <div class="mt-4 max-w-3xl space-y-4 text-slate-600">
-        <p>Sentinel Awareness is a standalone, consent-based platform for simulating social engineering attacks in a controlled educational environment. Participants receive fictional simulated messages containing realistic lures and are guided to follow links to educational landing pages.</p>
-        <p>The platform never collects real passwords, PINs, one-time codes, tokens, cookies, or keystrokes. All behavioural events are recorded as SHA-256 digests, deduplicated per participant/scenario, and used only for aggregated analytics and reporting.</p>
-        <p>Admins can create campaigns, assign participants, publish training modules, deliver simulated messages, and export reports in PDF and Excel formats.</p>
-      </div>
-    </section>
-
-    <section id="objectives" class="mx-auto grid max-w-6xl gap-12 px-5 sm:px-8">
-      <div class="flex flex-wrap items-center gap-3 mb-6">
-        <h2 class="font-display text-2xl font-bold">Objectives</h2>
-        <span class="tag tag-explain">Explanatory</span>
-      </div>
-      <div class="grid grid-cols-2 gap-4 sm:grid-cols-3">
-        <div class="border rounded-lg p-4 border-slate-200">
-          <h3 class="font-semibold text-slate-900 mb-3">Safe simulation</h3>
-          <ul class="list-disc list-inside text-slate-600 space-y-2">
-            <li>Fictional senders only</li>
-            <li>Links to educational pages</li>
-            <li>SHA-256 token digests</li>
-            <li>Automatic token expiry</li>
-          </ul>
-        </div>
-        <div class="border rounded-lg p-4 border-slate-200">
-          <h3 class="font-semibold text-slate-900 mb-3">Consent-based</h3>
-          <ul class="list-disc list-inside text-slate-600 space-y-2">
-            <li>Informed consent on registration</li>
-            <li>Withdrawal revokes tokens</li>
-            <li>No penalty required</li>
-            <li>Re-consent restores access</li>
-          </ul>
-        </div>
-        <div class="border rounded-lg p-4 border-slate-200">
-          <h3 class="font-semibold text-slate-900 mb-3">Aggregated analytics</h3>
-          <ul class="list-disc list-inside text-slate-600 space-y-2">
-            <li>Unique participant counts</li>
-            <li>Rates with zero-denominator guards</li>
-            <li>Pseudonymous exports</li>
-            <li>All numbers from DB</li>
-          </ul>
-        </div>
-        <div class="border rounded-lg p-4 border-slate-200">
-          <h3 class="font-semibold text-slate-900 mb-3">Role-based access</h3>
-          <ul class="list-disc list-inside text-slate-600 space-y-2">
-            <li>Admin manages campaigns/participants</li>
-            <li>Participant dashboard/inbox</li>
-            <li>Strict endpoint separation</li>
-            <li>CSRF on state-changing forms</li>
-          </ul>
+        <p class="text-sm font-semibold text-[#475063]">Systems Project &middot; Web Development &middot; Security Awareness</p>
+        <h1 id="page-title" class="font-display mt-2 max-w-4xl text-3xl font-bold leading-tight sm:text-4xl">Sentinel Awareness: Social Engineering Simulation and Training Platform</h1>
+        <p class="mt-5 max-w-3xl text-lg text-[#2b3447]">A Flask web application for running authorised, consent-based awareness campaigns. Participants practise identifying fictional suspicious messages, receive immediate educational feedback, and can continue learning through training modules and assessments.</p>
+        <dl class="mt-8 grid max-w-3xl gap-6 text-sm sm:grid-cols-3">
+          <div><dt class="text-[#475063]">Developer</dt><dd class="mt-1 font-semibold">Edwin Msilimba</dd></div>
+          <div><dt class="text-[#475063]">Programme</dt><dd class="mt-1 font-semibold">BSc Computer Science</dd></div>
+          <div><dt class="text-[#475063]">Institution</dt><dd class="mt-1 font-semibold">DMI University</dd></div>
+        </dl>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="https://github.com/portfoliodevme/social/tree/main/social_engineering_awareness" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded bg-[#050b1a] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#16213d]"><i class="fa-brands fa-github" aria-hidden="true"></i>View GitHub Repository</a>
+          <a href="report.md" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded border border-[#050b1a] px-6 py-3 text-sm font-semibold text-[#050b1a] transition hover:bg-white"><i class="fa-solid fa-file-lines" aria-hidden="true"></i>Read Project Report</a>
+          <a href="#features" class="inline-flex items-center gap-2 rounded border border-[#050b1a] px-6 py-3 text-sm font-semibold text-[#050b1a] transition hover:bg-white"><i class="fa-solid fa-list-check" aria-hidden="true"></i>Explore Features</a>
         </div>
       </div>
     </section>
 
-    <section id="stack" class="mx-auto grid max-w-6xl gap-12 px-5 sm:px-8">
-      <div class="flex flex-wrap items-center gap-3 mb-6">
-        <h2 class="font-display text-2xl font-bold">Technology stack</h2>
-        <span class="tag tag-explain">Explanatory</span>
-      </div>
-      <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
-        <div class="flex items-center gap-3 border rounded-md p-3"><i class="fa-brands fa-python w-5 text-center text-slate-500"></i><span class="text-sm font-medium text-slate-600">Python</span></div>
-        <div class="flex items-center gap-3 border rounded-md p-3"><i class="fa-solid fa-database w-5 text-center text-slate-500"></i><span class="text-sm font-medium text-slate-600">Flask</span></div>
-        <div class="flex items-center gap-3 border rounded-md p-3"><i class="fa-solid fa-database w-5 text-center text-slate-500"></i><span class="text-sm font-medium text-slate-600">Flask-SQLAlchemy</span></div>
-        <div class="flex items-center gap-3 border rounded-md p-3"><i class="fa-brands fa-mysql w-5 text-center text-slate-500"></i><span class="text-sm font-medium text-slate-600">MySQL/PyMySQL</span></div>
-        <div class="flex items-center gap-3 border rounded-md p-3"><i class="fa-solid fa-flask w-5 text-center text-slate-500"></i><span class="text-sm font-medium text-slate-600">Flask-Migrate</span></div>
-        <div class="flex items-center gap-3 border rounded-md p-3"><i class="fa-solid fa-user-check w-5 text-center text-slate-500"></i><span class="text-sm font-medium text-slate-600">Flask-Login</span></div>
-        <div class="flex items-center gap-3 border rounded-md p-3"><i class="fa-solid fa-lock w-5 text-center text-slate-500"></i><span class="text-sm font-medium text-slate-600">Werkzeug hashing</span></div>
-        <div class="flex items-center gap-3 border rounded-md p-3"><i class="fa-solid fa-file-pdf w-5 text-center text-slate-500"></i><span class="text-sm font-medium text-slate-600">ReportLab</span></div>
-        <div class="flex items-center gap-3 border rounded-md p-3"><i class="fa-solid fa-file-excel w-5 text-center text-slate-500"></i><span class="text-sm font-medium text-slate-600">OpenPyXL</span></div>
-        <div class="flex items-center gap-3 border rounded-md p-3"><i class="fa-solid fa-chart-bar w-5 text-center text-slate-500"></i><span class="text-sm font-medium text-slate-600">Chart.js</span></div>
-        <div class="flex items-center gap-3 border rounded-md p-3"><i class="fa-solid fa-table w-5 text-center text-slate-500"></i><span class="text-sm font-medium text-slate-600">Pandas</span></div>
-        <div class="flex items-center gap-3 border rounded-md p-3"><i class="fa-solid fa-code-branch w-5 text-center text-slate-500"></i><span class="text-sm font-medium text-slate-600">Flask-Limiter</span></div>
-        <div class="flex items-center gap-3 border rounded-md p-3"><i class="fa-solid fa-terminal w-5 text-center text-slate-500"></i><span class="text-sm font-medium text-slate-600">pytest</span></div>
+    <section class="border-b border-[#dde1e8]" aria-labelledby="quick-title">
+      <div class="mx-auto flex max-w-6xl flex-col gap-4 px-5 py-5 sm:px-8 md:flex-row md:items-center md:justify-between">
+        <h2 id="quick-title" class="text-sm font-semibold">Explore the project or go directly to its source.</h2>
+        <ul class="flex flex-wrap gap-x-6 gap-y-2 text-sm font-medium">
+          <li><a href="#overview" class="inline-flex items-center gap-2 underline underline-offset-4"><i class="fa-solid fa-circle-info" aria-hidden="true"></i>Overview</a></li>
+          <li><a href="#features" class="inline-flex items-center gap-2 underline underline-offset-4"><i class="fa-solid fa-list-check" aria-hidden="true"></i>Features</a></li>
+          <li><a href="#architecture" class="inline-flex items-center gap-2 underline underline-offset-4"><i class="fa-solid fa-sitemap" aria-hidden="true"></i>Architecture</a></li>
+          <li><a href="#privacy" class="inline-flex items-center gap-2 underline underline-offset-4"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i>Privacy &amp; safety</a></li>
+          <li><a href="#repository" class="inline-flex items-center gap-2 underline underline-offset-4"><i class="fa-brands fa-github" aria-hidden="true"></i>Repository</a></li>
+        </ul>
       </div>
     </section>
 
-    <section id="dataset" class="mx-auto grid max-w-6xl gap-12 px-5 sm:px-8">
-      <div class="flex flex-wrap items-center gap-3 mb-6">
-        <h2 class="font-display text-2xl font-bold">Demo dataset</h2>
-        <span class="tag tag-result">Project result</span>
+    <div class="mx-auto grid max-w-6xl gap-12 px-5 py-12 sm:px-8 lg:grid-cols-[13rem_1fr]">
+      <aside class="lg:sticky lg:top-24 lg:self-start" aria-label="On this page">
+        <p class="text-sm font-semibold">On this page</p>
+        <ul class="mt-3 flex flex-wrap gap-x-5 gap-y-2 text-sm text-[#475063] lg:flex-col lg:gap-y-2">
+          <li><a href="#overview" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Overview</a></li>
+          <li><a href="#problem" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Problem and goals</a></li>
+          <li><a href="#features" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Platform features</a></li>
+          <li><a href="#architecture" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Architecture</a></li>
+          <li><a href="#privacy" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Privacy and safety</a></li>
+          <li><a href="#analytics" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Analytics and reports</a></li>
+          <li><a href="#stack" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Technology stack</a></li>
+          <li><a href="#workflow" class="underline-offset-4 hover:text-[#050b1a] hover:underline">User workflows</a></li>
+          <li><a href="#limitations" class="underline-offset-4 hover:text-[#050b1a] hover:underline">Scope and next steps</a></li>
+          <li><a href="#repository" class="font-semibold underline-offset-4 hover:text-[#050b1a] hover:underline">GitHub repository</a></li>
+        </ul>
+      </aside>
+
+      <div class="min-w-0 space-y-16">
+        <section id="overview" aria-labelledby="overview-title">
+          <h2 id="overview-title" class="font-display text-2xl font-bold">Project overview</h2>
+          <div class="mt-4 max-w-3xl space-y-4 text-[#2b3447]">
+            <p>Sentinel Awareness gives organisations and educational institutions a controlled way to teach people how to recognise social engineering. Administrators create campaigns from fictional scenarios; participants interact with those simulations inside the application's own inbox rather than through unsolicited external messages.</p>
+            <p>The experience combines practice with education: after a participant follows a simulated link, the platform explains the warning signs and provides guidance. Training modules, assessments, campaign analytics, and downloadable reports help administrators plan follow-up learning.</p>
+          </div>
+          <aside class="mt-8 border-l-4 border-[#050b1a] bg-[#f4f5f7] p-6" aria-labelledby="principle-title">
+            <h3 id="principle-title" class="font-display text-lg font-semibold">Designed for learning, not credential collection</h3>
+            <p class="mt-2 max-w-3xl text-[#2b3447]">Simulated messages use fictional senders and lead to educational content. The platform is designed not to request or collect participants' real passwords or authentication codes.</p>
+          </aside>
+        </section>
+
+        <section id="problem" aria-labelledby="problem-title">
+          <h2 id="problem-title" class="font-display text-2xl font-bold">Problem and project goals</h2>
+          <div class="mt-4 max-w-3xl space-y-4 text-[#2b3447]">
+            <p>One-off presentations and static guidance can be difficult to translate into practical habits, and they provide little evidence about which topics need reinforcement. At the same time, awareness exercises must protect participants and be run with clear authorisation.</p>
+            <p>This project brings safe simulations, consent controls, guided learning, and measurable programme outcomes into one application. Its goals are to:</p>
+          </div>
+          <ol class="mt-6 md:columns-2 md:gap-x-12">
+            <li class="flex break-inside-avoid gap-4 border-t border-[#c5cad4] py-4"><span class="font-display font-bold" aria-hidden="true">1.</span><span>Let administrators build and manage campaigns with fictional scenarios.</span></li>
+            <li class="flex break-inside-avoid gap-4 border-t border-[#c5cad4] py-4"><span class="font-display font-bold" aria-hidden="true">2.</span><span>Give participants a controlled inbox and immediate learning feedback.</span></li>
+            <li class="flex break-inside-avoid gap-4 border-t border-[#c5cad4] py-4"><span class="font-display font-bold" aria-hidden="true">3.</span><span>Manage informed consent and withdrawal throughout participation.</span></li>
+            <li class="flex break-inside-avoid gap-4 border-t border-[#c5cad4] py-4"><span class="font-display font-bold" aria-hidden="true">4.</span><span>Support training modules and pre- and post-training assessments.</span></li>
+            <li class="flex break-inside-avoid gap-4 border-t border-[#c5cad4] py-4"><span class="font-display font-bold" aria-hidden="true">5.</span><span>Measure campaign and learning outcomes with privacy-aware analytics.</span></li>
+            <li class="flex break-inside-avoid gap-4 border-t border-[#c5cad4] py-4"><span class="font-display font-bold" aria-hidden="true">6.</span><span>Provide administrators with readable, exportable programme reports.</span></li>
+          </ol>
+        </section>
+
+        <section id="features" aria-labelledby="features-title">
+          <h2 id="features-title" class="font-display text-2xl font-bold">Platform features</h2>
+          <p class="mt-3 max-w-3xl text-[#475063]">Separate administrator and participant experiences support the full awareness-programme lifecycle.</p>
+          <div class="mt-6 grid gap-5 sm:grid-cols-2">
+            <article class="border border-[#dde1e8] p-6">
+              <h3 class="font-display text-lg font-semibold">Campaign and scenario management</h3>
+              <p class="mt-2 text-sm text-[#2b3447]">Administrators create campaigns, set objectives and dates, select participants, and manage fictional social engineering scenarios. Campaigns move through draft, scheduled, active, paused, completed, and archived states.</p>
+            </article>
+            <article class="border border-[#dde1e8] p-6">
+              <h3 class="font-display text-lg font-semibold">Participant simulation inbox</h3>
+              <p class="mt-2 text-sm text-[#2b3447]">Participants can review simulated messages, follow a training link, report a suspicious message, and see educational guidance tied to the scenario.</p>
+            </article>
+            <article class="border border-[#dde1e8] p-6">
+              <h3 class="font-display text-lg font-semibold">Learning and assessments</h3>
+              <p class="mt-2 text-sm text-[#2b3447]">Published training modules and assessments support self-paced learning. Assessment attempts record scores, pass status, duration, and answers, including pre- and post-training attempts.</p>
+            </article>
+            <article class="border border-[#dde1e8] p-6">
+              <h3 class="font-display text-lg font-semibold">Administrator workspace</h3>
+              <p class="mt-2 text-sm text-[#2b3447]">Role-specific dashboards bring campaign activity, participant status, training progress, assessment performance, analytics, and reporting tools together for programme administrators.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="architecture" aria-labelledby="architecture-title">
+          <h2 id="architecture-title" class="font-display text-2xl font-bold">Application architecture</h2>
+          <p class="mt-4 max-w-3xl text-[#2b3447]">The application uses Flask's application-factory pattern. Routes are organised into blueprints, and reusable business logic is separated into service modules that work with SQLAlchemy models.</p>
+          <div class="mt-6 overflow-x-auto border border-[#dde1e8] bg-[#f4f5f7] p-5">
+            <pre class="min-w-[34rem] text-sm text-[#2b3447]"><code>Browser
+  |-- Administrator interface
+  |-- Participant interface
+        |
+Flask application and role-specific blueprints
+        |
+Services: campaigns, participants, simulations, training,
+          assessments, analytics, activity, and reports
+        |
+SQLAlchemy models and database
+  |-- MySQL / MariaDB deployment
+  |-- SQLite test configuration</code></pre>
+          </div>
+          <p class="mt-4 max-w-3xl text-sm text-[#475063]">The codebase separates authentication, campaigns, participants, simulations, training, assessments, analytics, reports, and administrative routes. Database migrations are managed with Flask-Migrate and Alembic.</p>
+        </section>
+
+        <section id="privacy" aria-labelledby="privacy-title">
+          <h2 id="privacy-title" class="font-display text-2xl font-bold">Privacy, consent, and safe operation</h2>
+          <p class="mt-4 max-w-3xl text-[#2b3447]">Consent and privacy are central to the exercise. Participants make an informed choice, can withdraw without providing a reason, and are not penalised for opting out. Withdrawal blocks future assignments and revokes outstanding simulation tokens.</p>
+          <ul class="mt-6 max-w-3xl list-disc space-y-3 pl-5 text-[#2b3447]">
+            <li>Simulations are delivered through the application's internal inbox; external email is disabled by default.</li>
+            <li>Fictional scenarios provide educational pages rather than real authentication forms.</li>
+            <li>Simulation tokens are stored as SHA-256 digests, expire, and can be revoked.</li>
+            <li>Participant reporting and campaign exports use pseudonymous codes rather than exposing unnecessary identity details.</li>
+            <li>Administrator and participant permissions are separated, with CSRF protection on state-changing forms.</li>
+            <li>Additional safeguards include password hashing, login attempt controls, rate limiting, and secure HTTP response headers.</li>
+          </ul>
+          <aside class="mt-8 border-l-4 border-[#050b1a] bg-[#f4f5f7] p-6">
+            <h3 class="font-display text-lg font-semibold">Use only with authorisation and consent</h3>
+            <p class="mt-2 max-w-3xl text-[#2b3447]">The application is intended for approved awareness programmes. Its simulations should be configured and run transparently, with appropriate consent and institutional oversight.</p>
+          </aside>
+        </section>
+
+        <section id="analytics" aria-labelledby="analytics-title">
+          <h2 id="analytics-title" class="font-display text-2xl font-bold">Analytics and reporting</h2>
+          <div class="mt-4 max-w-3xl space-y-4 text-[#2b3447]">
+            <p>Campaign analytics summarise participant-level outcomes, including delivery, opens, simulated-link clicks, and reports. Scenario comparisons help identify where additional education may be useful. Repeated interactions are deduplicated so they do not artificially inflate event totals.</p>
+            <p>The wider programme view also brings together consent and participation status, assessment averages and pre/post comparisons, training completion, and participant activity. Rates are derived from recorded data with guards for empty denominators.</p>
+            <p>Administrators can generate printable reports and export campaign or institution-wide summaries to PDF and Excel. Exports are designed to use pseudonymous participant codes.</p>
+          </div>
+        </section>
+
+        <section id="stack" aria-labelledby="stack-title">
+          <h2 id="stack-title" class="font-display text-2xl font-bold">Technology stack</h2>
+          <p class="mt-3 max-w-2xl text-[#475063]">A modular Python web application with a browser-based interface and database-backed reporting.</p>
+          <ul class="mt-6 grid grid-cols-2 gap-3 text-sm sm:grid-cols-3 lg:grid-cols-4">
+            <li class="border border-[#dde1e8] p-3"><span class="font-semibold">Backend</span><br>Python 3.11–3.13, Flask 3</li>
+            <li class="border border-[#dde1e8] p-3"><span class="font-semibold">Data layer</span><br>SQLAlchemy, MySQL / MariaDB</li>
+            <li class="border border-[#dde1e8] p-3"><span class="font-semibold">Migrations</span><br>Flask-Migrate, Alembic</li>
+            <li class="border border-[#dde1e8] p-3"><span class="font-semibold">Authentication</span><br>Flask-Login, Flask-WTF</li>
+            <li class="border border-[#dde1e8] p-3"><span class="font-semibold">Protection</span><br>Werkzeug, Flask-Limiter</li>
+            <li class="border border-[#dde1e8] p-3"><span class="font-semibold">Reporting</span><br>ReportLab, OpenPyXL, Pandas</li>
+            <li class="border border-[#dde1e8] p-3"><span class="font-semibold">Charts</span><br>Chart.js</li>
+            <li class="border border-[#dde1e8] p-3"><span class="font-semibold">Interface</span><br>HTML, CSS, JavaScript, Tailwind CSS</li>
+            <li class="border border-[#dde1e8] p-3"><span class="font-semibold">Validation</span><br>Pytest, SQLite test database</li>
+          </ul>
+        </section>
+
+        <section id="workflow" aria-labelledby="workflow-title">
+          <h2 id="workflow-title" class="font-display text-2xl font-bold">Typical user workflows</h2>
+          <div class="mt-6 grid gap-8 md:grid-cols-2">
+            <div>
+              <h3 class="font-display text-lg font-semibold">Administrator</h3>
+              <ol class="mt-3 text-sm text-[#2b3447]">
+                <li class="flex gap-4 border-t border-[#dde1e8] py-3"><span class="font-display font-bold">1.</span><span>Prepare scenarios, training content, and assessments.</span></li>
+                <li class="flex gap-4 border-t border-[#dde1e8] py-3"><span class="font-display font-bold">2.</span><span>Create a campaign and assign eligible, consenting participants.</span></li>
+                <li class="flex gap-4 border-t border-[#dde1e8] py-3"><span class="font-display font-bold">3.</span><span>Activate the campaign and monitor aggregate activity.</span></li>
+                <li class="flex gap-4 border-t border-[#dde1e8] py-3"><span class="font-display font-bold">4.</span><span>Review outcomes, plan follow-up learning, and export reports.</span></li>
+              </ol>
+            </div>
+            <div>
+              <h3 class="font-display text-lg font-semibold">Participant</h3>
+              <ol class="mt-3 text-sm text-[#2b3447]">
+                <li class="flex gap-4 border-t border-[#dde1e8] py-3"><span class="font-display font-bold">1.</span><span>Register and review the participation consent information.</span></li>
+                <li class="flex gap-4 border-t border-[#dde1e8] py-3"><span class="font-display font-bold">2.</span><span>Review simulated messages in the application inbox.</span></li>
+                <li class="flex gap-4 border-t border-[#dde1e8] py-3"><span class="font-display font-bold">3.</span><span>Report or inspect a simulation and read the learning guidance.</span></li>
+                <li class="flex gap-4 border-t border-[#dde1e8] py-3"><span class="font-display font-bold">4.</span><span>Complete training and assessments, or withdraw consent.</span></li>
+              </ol>
+            </div>
+          </div>
+        </section>
+
+        <section id="limitations" aria-labelledby="limitations-title">
+          <h2 id="limitations-title" class="font-display text-2xl font-bold">Current scope and next steps</h2>
+          <p class="mt-4 max-w-3xl text-[#2b3447]">The current project focuses on internal inbox simulations, self-paced training, assessments, analytics, and downloadable reports. External email is not the default delivery method and requires explicit configuration and approval.</p>
+          <p class="mt-4 max-w-3xl text-[#2b3447]">Potential future improvements include broader accessibility and mobile usability testing, richer training content, approved notification integrations, and additional scheduling and reporting options.</p>
+        </section>
       </div>
-      <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 text-slate-600">
-        <div class="border rounded-lg p-4 border-slate-200"><h3 class="font-semibold text-slate-900 mb-2">Admin</h3><ul class="space-y-1"><li>Username: <code>admin</code></li><li>Password: <code>Awareness#2026</code></li></ul></div>
-        <div class="border rounded-lg p-4 border-slate-200"><h3 class="font-semibold text-slate-900 mb-2">Participants</h3><ul class="space-y-1"><li>alice.morgan, ben.carter, chiara.rossi, dev.patel</li><li>Password: <code>Awareness#2026</code></li></ul></div>
-        <div class="border rounded-lg p-4 border-slate-200"><h3 class="font-semibold text-slate-900 mb-2">Campaigns</h3><ul class="space-y-1"><li>3 campaigns (draft/scheduled/active)</li><li>Scenarios: phishing, pretexting, baiting, quid-pro-quo</li></ul></div>
+    </div>
+
+    <section id="repository" class="border-t border-[#dde1e8] bg-[#f4f5f7]" aria-labelledby="repository-title">
+      <div class="mx-auto max-w-6xl px-5 py-16 sm:px-8">
+        <p class="text-sm font-semibold text-[#475063]">Project source</p>
+        <h2 id="repository-title" class="font-display mt-2 text-3xl font-bold">Explore the GitHub repository</h2>
+        <p class="mt-3 max-w-2xl text-[#475063]">Browse the application source, Flask templates, migrations, project documentation, and tests for Sentinel Awareness.</p>
+        <div class="mt-8 flex flex-col gap-6 border border-[#dde1e8] bg-white p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+          <div>
+            <h3 class="font-display text-xl font-semibold">Social Engineering Awareness</h3>
+            <p class="mt-2 break-all text-sm text-[#475063]">github.com/portfoliodevme/social/tree/main/social_engineering_awareness</p>
+            <a href="report.md" target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex items-center gap-2 text-sm font-semibold underline underline-offset-4"><i class="fa-solid fa-file-lines" aria-hidden="true"></i>Read the project report</a>
+          </div>
+          <a href="https://github.com/portfoliodevme/social/tree/main/social_engineering_awareness" target="_blank" rel="noopener noreferrer" class="inline-flex shrink-0 items-center justify-center gap-2 rounded bg-[#050b1a] px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#16213d]"><i class="fa-brands fa-github" aria-hidden="true"></i>Open Repository</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-[#050b1a] text-white" aria-labelledby="back-title">
+      <div class="mx-auto flex max-w-6xl flex-col gap-6 px-5 py-12 sm:px-8 md:flex-row md:items-center md:justify-between">
+        <div>
+          <h2 id="back-title" class="font-display text-2xl font-bold">More from Edwin Msilimba</h2>
+          <p class="mt-2 max-w-xl text-[#b7c0d1]">Explore more projects and the work behind them.</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a href="projects.html" class="rounded bg-white px-6 py-3 text-sm font-semibold text-[#050b1a] transition hover:bg-[#e6e9f0]">All Projects</a>
+          <a href="odbrms.html" class="rounded border border-white px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#16213d]">ODBRMS</a>
+          <a href="intellidocs.html" class="rounded border border-white px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#16213d]">IntelliDocs</a>
+          <a href="index.html" class="rounded border border-white px-6 py-3 text-sm font-semibold text-white transition hover:bg-[#16213d]">About Edwin</a>
+        </div>
       </div>
     </section>
   </main>
 
-  <footer class="bg-slate-950 text-white">
+  <footer class="bg-[#050b1a] text-white">
     <div class="mx-auto max-w-6xl px-5 py-12 sm:px-8">
       <div class="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
-        <div><p class="font-display text-lg font-semibold">Sentinel Awareness</p><p class="mt-3 text-sm text-slate-400">Consent-based simulation & training platform</p></div>
+        <div>
+          <p class="font-display text-lg font-semibold">Edwin Msilimba</p>
+          <p class="mt-3 text-sm text-[#b7c0d1]">BSc Computer Science<br>DMI University</p>
+        </div>
         <ul class="space-y-3 text-sm" aria-label="Footer pages">
           <li><a href="index.html" class="underline-offset-4 hover:underline">Home</a></li>
           <li><a href="projects.html" class="underline-offset-4 hover:underline">Projects</a></li>
-          <li><a href="project.html" class="underline-offset-4 hover:underline">Featured</a></li>
+          <li><a href="project.html" class="underline-offset-4 hover:underline">Featured Project</a></li>
+          <li><a href="odbrms.html" class="underline-offset-4 hover:underline">ODBRMS</a></li>
+          <li><a href="intellidocs.html" class="underline-offset-4 hover:underline">IntelliDocs</a></li>
         </ul>
         <ul class="space-y-3 text-sm" aria-label="Contact links">
-          <li><a href="https://github.com/Edoh478/" target="_blank" rel="noopener noreferrer" class="underline-offset-4 hover:underline"><i class="fa-brands fa-github mr-2" aria-hidden="true"></i>GitHub</a></li>
+          <li><a href="https://github.com/Edoh478/" target="_blank" rel="noopener noreferrer" class="underline-offset-4 hover:underline"><i class="fa-brands fa-github mr-2" aria-hidden="true"></i>GitHub Profile</a></li>
+          <li><a href="https://github.com/portfoliodevme/social/tree/main/social_engineering_awareness" target="_blank" rel="noopener noreferrer" class="underline-offset-4 hover:underline"><i class="fa-solid fa-code mr-2" aria-hidden="true"></i>Sentinel Repository</a></li>
+          <li><a href="index.html#contact" class="underline-offset-4 hover:underline"><i class="fa-solid fa-envelope mr-2" aria-hidden="true"></i>Contact</a></li>
         </ul>
       </div>
-      <p class="mt-10 border-t border-slate-800 pt-6 text-xs text-slate-500">&copy; 2026 Edwin Msilimba</p>
+      <p class="mt-10 border-t border-[#1d2742] pt-6 text-xs text-[#b7c0d1]">&copy; 2026 Edwin Msilimba</p>
     </div>
   </footer>
-
+  <script>
+    const menuButton = document.getElementById("menu-btn");
+    const mobileMenu = document.getElementById("mobile-menu");
+    menuButton.addEventListener("click", () => {
+      const isExpanded = menuButton.getAttribute("aria-expanded") === "true";
+      menuButton.setAttribute("aria-expanded", String(!isExpanded));
+      mobileMenu.classList.toggle("hidden", isExpanded);
+    });
+  </script>
 </body>
 </html>
